@@ -1,9 +1,8 @@
-from newsapi import NewsApiClient
 import json
 
 from flask import Flask, render_template
 from flask_apscheduler import APScheduler
-
+from newsapi import NewsApiClient
 from newscatcherapi import NewsCatcherApiClient
 from random_word import Wordnik
 
@@ -19,13 +18,11 @@ wn = Wordnik()
 def get_newscatcher():
     articles = newscatcherapi.get_search(q="Trump", lang='en',
                                          page_size=20)
-
     return articles
 
 
 def get_newsapi(word):
     articles = newsapi.get_everything(q=word, language='en')
-
     return articles
 
 

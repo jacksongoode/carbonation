@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Data Preview</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  </head>
+  <body>
+    <h2>{{data.word}}</h2>
+    <ul>
+      {% for item in data.articles.articles %}
+      <li>
+        <p>{{item.title}}</p>
+        <code>{{item.description}}</code>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

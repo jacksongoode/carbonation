@@ -17,7 +17,7 @@ newsapi = NewsApiClient(api_key=os.environ.get('NEWSAPI'))
 
 def get_newscatcher_sources():
     sources = catcher.get_sources(lang='en',
-                                        countries='US')
+                                  countries='US')
 
     with open('sources/newscather.json', 'w') as f:
         json.dump(sources, f)
@@ -36,3 +36,60 @@ def download_bias():
 
     with open("sources/mbfc.json", "wb") as f:
         f.write(mbfc)
+
+
+def hour_window(hours):
+    now = datetime.now()
+    before = now - timedelta(hours=hours)
+
+    before = before.strftime('%Y-%m-%dT%H:%M:%S')
+    now = now.strftime('%Y-%m-%dT%H:%M:%S')
+
+    return before, now
+
+
+def get_newscatcher_headlines():
+    # before, now = hour_window(1)
+
+    articles = catcher.get_latest_headlines_all_pages(
+        when='1h',
+        lang='en',
+        max_page=1,
+        seconds_pause=1.0,
+    )
+
+    return articles
+
+
+def get_newsapi(word):
+    before, now = hour_window(1)
+
+    articles = newsapi.get_everything(
+        q=word,
+        from_param=before,
+        to=now,
+        language='en',
+        sort_by='publishedAt'
+    )
+
+    return articles
+
+
+# ! Can't do much... no time filter!
+def get_newsapi_headlines():
+    headlines = newsapi.get_top_headlines(
+        language='en',
+        page_size=100)
+
+    return headlines
+
+
+def split_url(text):
+    base = ""
+    try:
+        groups = text.split('/')
+        base = '/'.join(groups[2:3])
+    except:
+        pass
+
+    return base

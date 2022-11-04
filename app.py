@@ -1,5 +1,5 @@
-import os
 import json
+import os
 from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
@@ -8,70 +8,29 @@ from flask_apscheduler import APScheduler
 from newsapi import NewsApiClient
 from newscatcherapi import NewsCatcherApiClient
 
+from utils import get_newsapi, get_newscatcher_headlines, split_url
+from analysis import job1
+
 load_dotenv()
 catcher = NewsCatcherApiClient(x_api_key=os.environ.get('NEWSCATCHER'))
 newsapi = NewsApiClient(api_key=os.environ.get('NEWSAPI'))
 
-
-def hour_window(hours):
-    now = datetime.now()
-    before = now - timedelta(hours=hours)
-
-    before = before.strftime('%Y-%m-%dT%H:%M:%S')
-    now = now.strftime('%Y-%m-%dT%H:%M:%S')
-
-    return before, now
+# set configuration values
 
 
-def get_newscatcher_headlines():
-    # before, now = hour_window(1)
-
-    articles = catcher.get_latest_headlines_all_pages(
-        when='1h',
-        lang='en',
-        max_page=1,
-        seconds_pause=1.0,
-    )
-
-    return articles
-
-
-def get_newsapi(word):
-    before, now = hour_window(1)
-
-    articles = newsapi.get_everything(
-        q=word,
-        from_param=before,
-        to=now,
-        language='en',
-        sort_by='publishedAt'
-    )
-
-    return articles
-
-
-# ! Can't do much... no time filter!
-def get_newsapi_headlines():
-    headlines = newsapi.get_top_headlines(
-        language='en',
-        page_size=100)
-
-    return headlines
-
-
-def split_url(text):
-    base = ""
-    try:
-        groups = text.split('/')
-        base = '/'.join(groups[2:3])
-    except:
-        pass
-
-    return base
+class Config:
+    SCHEDULER_API_ENABLED = True
 
 
 app = Flask(__name__)
 app.jinja_env.globals.update(split_url=split_url)
+app.config.from_object(Config())
+
+# initialize scheduler
+scheduler = APScheduler()
+# if you don't wanna use a config, you can set options here:
+# scheduler.api_enabled = True
+scheduler.init_app(app)
 
 
 @app.route('/page')
@@ -99,3 +58,7 @@ def render_newscatcher():
     }
 
     return render_template('newscatcher.html', data=data)
+
+
+if __name__ == '__main__':
+    app.run()

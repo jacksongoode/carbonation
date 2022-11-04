@@ -1,40 +1,101 @@
+import os
 import json
+from datetime import datetime, timedelta
 
+from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_apscheduler import APScheduler
 from newsapi import NewsApiClient
 from newscatcherapi import NewsCatcherApiClient
-from random_word import Wordnik
 
-newscatcherapi = NewsCatcherApiClient(
-    x_api_key='b_Gopvrwzl8fDrtDn-z__6jY1eAvUJ-Zk8lhstwb1UM')
-
-# Init
-newsapi = NewsApiClient(api_key='5a3f0af6add84d15997ea15da457f2bf')
-
-wn = Wordnik()
+load_dotenv()
+catcher = NewsCatcherApiClient(x_api_key=os.environ.get('NEWSCATCHER'))
+newsapi = NewsApiClient(api_key=os.environ.get('NEWSAPI'))
 
 
-def get_newscatcher():
-    articles = newscatcherapi.get_search(q="Trump", lang='en',
-                                         page_size=20)
+def hour_window(hours):
+    now = datetime.now()
+    before = now - timedelta(hours=hours)
+
+    before = before.strftime('%Y-%m-%dT%H:%M:%S')
+    now = now.strftime('%Y-%m-%dT%H:%M:%S')
+
+    return before, now
+
+
+def get_newscatcher_headlines():
+    # before, now = hour_window(1)
+
+    articles = catcher.get_latest_headlines_all_pages(
+        when='1h',
+        lang='en',
+        max_page=1,
+        seconds_pause=1.0,
+    )
+
     return articles
 
 
 def get_newsapi(word):
-    articles = newsapi.get_everything(q=word, language='en')
+    before, now = hour_window(1)
+
+    articles = newsapi.get_everything(
+        q=word,
+        from_param=before,
+        to=now,
+        language='en',
+        sort_by='publishedAt'
+    )
+
     return articles
 
 
+# ! Can't do much... no time filter!
+def get_newsapi_headlines():
+    headlines = newsapi.get_top_headlines(
+        language='en',
+        page_size=100)
+
+    return headlines
+
+
+def split_url(text):
+    base = ""
+    try:
+        groups = text.split('/')
+        base = '/'.join(groups[2:3])
+    except:
+        pass
+
+    return base
+
+
 app = Flask(__name__)
+app.jinja_env.globals.update(split_url=split_url)
 
 
-@app.route("/")
-def data():
-    word = wn.get_random_word()
+@app.route('/page')
+def page():
+    return render_template('page.html', data=data)
+
+
+@app.route('/newsapi')
+def render_newsapi():
+    news = get_newsapi('*')
     data = {
-        "word": word,
-        "articles": get_newsapi(word)
+        'articles': news['articles'],
+        'total_results': news['totalResults'],
     }
-    print(data)
-    return render_template('data.html', data=data)
+
+    return render_template('newsapi.html', data=data)
+
+
+@app.route('/newscatcher')
+def render_newscatcher():
+    news = get_newscatcher_headlines()
+    data = {
+        'articles': news['articles'],
+        'total_results': news['total_hits'],
+    }
+
+    return render_template('newscatcher.html', data=data)

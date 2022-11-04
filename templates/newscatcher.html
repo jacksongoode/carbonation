@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Data Preview</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+  </head>
+  <body>
+    <h2>Total results found: {{data.total_results}}</h2>
+    <hr />
+    <ul>
+      {% for item in data.articles %}
+      <h4>{{item.title}}</h4>
+      <p>
+        <i
+          >{{ item.author }} -
+          <a href="{{ item.link }}">{{ item.clean_url }}</a></i
+        >
+      </p>
+      <blockquote>
+        <p>{{item.summary}}</p>
+      </blockquote>
+      <hr />
+      {% endfor %}
+    </ul>
+  </body>
+</html>

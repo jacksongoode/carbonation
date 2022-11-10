@@ -1,0 +1,22 @@
+<head>
+  <!-- <meta name="color-scheme" content="dark" /> -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" />
+  <title>{{ title }}</title>
+</head>
+<nav>
+  <ul>
+    <li><strong>{{ title }}</strong></li>
+  </ul>
+  <ul>
+    <li><a href="newscatcher">NewsCatcher</a></li>
+    <li><a href="newsapi">NewsAPI</a></li>
+    <li><a href="about" role="button">About</a></li>
+  </ul>
+</nav>
+<hr></hr>

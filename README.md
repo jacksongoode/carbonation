@@ -9,7 +9,7 @@ which topics are covered more often by progressive or conservative outlets.
 
 ## How?
 
-It does so by leverage the [NewsCatcher API](https://newscatcherapi.com/) to retrieve articles and
+It does so by leveraging the [NewsCatcher API](https://newscatcherapi.com/) to retrieve articles and
 summaries from the most popular news publishers.
 
 Built with Flask, Next.js, and serverless Postgres.

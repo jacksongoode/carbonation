@@ -52,4 +52,4 @@ def job2():
 # def job3():
 #     print('Job 3 executed')
 
-scheduler.start()
+# scheduler.start()

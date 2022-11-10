@@ -33,9 +33,9 @@ scheduler = APScheduler()
 scheduler.init_app(app)
 
 
-@app.route('/page')
-def page():
-    return render_template('page.html', data=data)
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 @app.route('/newsapi')
@@ -51,10 +51,10 @@ def render_newsapi():
 
 @app.route('/newscatcher')
 def render_newscatcher():
-    news = get_newscatcher_headlines()
+    news = get_newscatcher_headlines(1)
     data = {
-        'articles': news['articles'],
-        'total_results': news['total_hits'],
+        'articles': news.get('articles', ''),
+        'total_results': news['total_hits']
     }
 
     return render_template('newscatcher.html', data=data)

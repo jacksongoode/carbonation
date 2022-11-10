@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Data Preview</title>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-  </head>
+<html data-theme="light">
   <body>
-    <h2>Total results found: {{ data.total_results }}</h2>
-    <ul>
+    <main class="container">
+      {% with title="NewsAPI" %} {% include 'components/header.html' %} {%
+      endwith %}
+      <h1>Total results found: {{ data.total_results }}</h1>
       {% for item in data.articles %}
-      <h4>{{ item.title }}</h4>
-      <p>
-        <i
-          >{{ item.author }} - {{ item.source.name }} -
-          <a href="{{ item.url }}">{{ split_url(item.url) }}</a></i
-        >
-      </p>
-      <blockquote>
+      <article class="article">
+        <h4>{{ item.title }}</h4>
+        <p>
+          <i
+            >{{ item.author }} - {{ item.source.name }} -
+            <a href="{{ item.url }}">{{ split_url(item.url) }}</a></i
+          >
+        </p>
         <p>{{ item.content }}</p>
-      </blockquote>
+      </article>
       <hr />
       {% endfor %}
-    </ul>
+    </main>
   </body>
 </html>

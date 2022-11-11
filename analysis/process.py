@@ -17,7 +17,7 @@ def fetch_store():
     urls = ['.'.join(urlparse(url).netloc.split('.')[-2:]) for url in urls]
     res = get_newscatcher_headlines(hours, sources=urls, max_page=10)
 
-    with open(f"articles/newscatcher_{hours}_{now}.json", "w") as f:
+    with open(f"articles/newscatcher_{hours}hr_{now}.json", "w") as f:
         f.write(json.dumps(res))
 
     return res

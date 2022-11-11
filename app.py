@@ -60,5 +60,13 @@ def render_newscatcher():
     return render_template('newscatcher.html', data=data)
 
 
+@app.route('/model')
+def render_model():
+    model_fn = 'bert_4hr_11-05-2022_11:33:12.json'
+    news = json.load(open(f'resources/computed/{model_fn}'))
+
+    return render_template('model.html', data=news)
+
+
 if __name__ == '__main__':
     app.run()

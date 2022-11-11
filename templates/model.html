@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html data-theme="light">
+  <body>
+    <main class="container">
+      {% with title="Model" %} {% include 'components/header.html' %} {% endwith
+      %}
+      <h2>Total topics: {{ data|length }}</h2>
+      {% for model in data %}
+      <article class="article">
+        <details closed>
+          <summary>
+            <p>
+              <b>Topic {{ model }}:</b>
+            </p>
+            <i>
+              {% for topic in data[model].topic %}{{ topic[0] }} {% endfor %}
+            </i>
+          </summary>
+          <ul>
+            {% for doc in data[model].docs %}
+            <li>
+              <p>{{ doc.text }} - <a href="{{ doc.url }}">{{ doc.author }}</a></p>
+            </li>
+            {% endfor %}
+          </ul>
+        </details>
+      </article>
+      {% endfor %}
+    </main>
+  </body>
+</html>

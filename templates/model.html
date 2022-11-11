@@ -5,7 +5,7 @@
       {% with title="Model" %} {% include 'components/header.html' %} {% endwith
       %}
       <h2>Total topics: {{ data|length }}</h2>
-      {% for model in data %}
+      {% for model in (data|list)[1:] %}
       <article class="article">
         <details closed>
           <summary>
@@ -19,7 +19,9 @@
           <ul>
             {% for doc in data[model].docs %}
             <li>
-              <p>{{ doc.text }} - <a href="{{ doc.url }}">{{ doc.author }}</a></p>
+              <p>
+                {{ doc.text }} - <a href="{{ doc.url }}">{{ doc.author }}</a>
+              </p>
             </li>
             {% endfor %}
           </ul>

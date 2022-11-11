@@ -75,7 +75,7 @@ def create_topic_docs(model, topics, probs, docs, links):
                   for topic in set(topics)}
 
     for topic, doc, prob, link in zip(topics, docs, probs, links):
-        if max(prob) > 0.3:
+        if max(prob) > 0.5:
             topic_docs[topic]["docs"].append(
                 {"text": doc,
                  "prob": sorted(prob.tolist())[-5:][::-1],

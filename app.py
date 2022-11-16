@@ -1,21 +1,19 @@
 import json
 import os
-from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_apscheduler import APScheduler
+from flask_compress import Compress
 from newsapi import NewsApiClient
 from newscatcherapi import NewsCatcherApiClient
 
 from utils import get_newsapi, get_newscatcher_headlines, split_url
-from analysis import job1
-
-load_dotenv()
-catcher = NewsCatcherApiClient(x_api_key=os.environ.get('NEWSCATCHER'))
-newsapi = NewsApiClient(api_key=os.environ.get('NEWSAPI'))
 
 # set configuration values
+load_dotenv()
+catcher = NewsCatcherApiClient(x_api_key=os.environ.get("NEWSCATCHER"))
+newsapi = NewsApiClient(api_key=os.environ.get("NEWSAPI"))
 
 
 class Config:
@@ -25,6 +23,7 @@ class Config:
 app = Flask(__name__)
 app.jinja_env.globals.update(split_url=split_url)
 app.config.from_object(Config())
+Compress(app)
 
 # initialize scheduler
 scheduler = APScheduler()
@@ -33,40 +32,36 @@ scheduler = APScheduler()
 scheduler.init_app(app)
 
 
-@app.route('/about')
+@app.route("/", "/about")
 def about():
-    return render_template('about.html')
+    return render_template("about.html")
 
 
-@app.route('/newsapi')
+@app.route("/newsapi")
 def render_newsapi():
-    news = get_newsapi('*')
+    news = get_newsapi("*")
     data = {
-        'articles': news['articles'],
-        'total_results': news['totalResults'],
+        "articles": news["articles"],
+        "total_results": news["totalResults"],
     }
 
-    return render_template('newsapi.html', data=data)
+    return render_template("newsapi.html", data=data)
 
 
-@app.route('/newscatcher')
+@app.route("/newscatcher")
 def render_newscatcher():
     news = get_newscatcher_headlines(1)
-    data = {
-        'articles': news.get('articles', ''),
-        'total_results': news['total_hits']
-    }
+    data = {"articles": news.get("articles", ""), "total_results": news["total_hits"]}
 
-    return render_template('newscatcher.html', data=data)
+    return render_template("newscatcher.html", data=data)
 
 
-@app.route('/model')
+@app.route("/model")
 def render_model():
-    model_fn = 'bert_4hr_11-05-2022_11:33:12.json'
-    news = json.load(open(f'resources/computed/{model_fn}'))
+    model_fn = "bert_4hr_11-05-2022_11:33:12.json"
+    news = json.load(open(f"resources/computed/{model_fn}"))
+    return render_template("bubble.html", data=news)
 
-    return render_template('model.html', data=news)
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()

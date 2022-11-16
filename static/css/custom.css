@@ -8,3 +8,28 @@
 /* ul li {
   list-style: none;
 } */
+
+.circle {
+  border-radius: 100%;
+  background-color: whitesmoke;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  justify-content: center;
+  display: flex;
+}
+
+.article-modal {
+  text-align: left;
+}
+
+.theme-switcher {
+  position: absolute;
+}

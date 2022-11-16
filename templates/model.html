@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html data-theme="light">
+  {% with title="Model" %} {% include 'components/header.html' %} {% endwith %}
   <body>
     <main class="container">
-      {% with title="Model" %} {% include 'components/header.html' %} {% endwith
-      %}
       <h2>Total topics: {{ data|length }}</h2>
       {% for model in (data|list)[1:] %}
       <article class="article">
@@ -29,5 +28,11 @@
       </article>
       {% endfor %}
     </main>
+    <button
+      class="contrast switcher theme-switcher"
+      aria-label="Turn off dark mode"
+    >
+      <i>Turn off dark mode</i>
+    </button>
   </body>
 </html>

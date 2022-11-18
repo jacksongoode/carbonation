@@ -12,12 +12,14 @@ from gensim.parsing.preprocessing import (
 from hdbscan import HDBSCAN
 from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer
-from umap import UMAP
 
-from analysis import *
 from utils import *
 
+# from umap import UMAP
+
+
 news_json = "newscatcher_4hr_11-05-2022_11:33:12.json"
+
 CUSTOM_FILTERS = [
     lambda x: x.lower(),
     strip_tags,
@@ -35,7 +37,8 @@ def preprocess(docs):
     return cleaned_docs
 
 
-def bert_model():
+def bert_model(news=None):
+
     vectorizer_model = CountVectorizer(
         ngram_range=(1, 2), strip_accents="ascii", stop_words="english"
     )
@@ -53,20 +56,31 @@ def bert_model():
         calculate_probabilities=True,
         verbose=True,
     )
-    news = json.load(open(f"resources/articles/{news_json}"))
+
+    if news is None:
+        with open(f"resources/articles/{news_json}", "r") as f:
+            news = json.load(f)
+
+    # Enrich docs with bias
+    news = enrich_docs(news)
 
     docs = []
     links = []
     for a in news["articles"]:
         if a["excerpt"] is not None:
             docs.append(": ".join([a["title"], a["excerpt"]]))
-            links.append({"author": a["clean_url"], "url": a["link"]})
+            links.append(
+                {"domain": a["clean_url"], "link": a["link"], "bias": a["bias"]}
+            )
 
     # Remove dupes
     # docs = list(set(docs))
     # docs = preprocess(docs)
 
+    # Make model
     topics, probs = model.fit_transform(docs)
+
+    # Make resultant json
     model, topic_docs = create_topic_docs(model, topics, probs, docs, links)
 
     return (model, topic_docs)
@@ -83,11 +97,47 @@ def create_topic_docs(model, topics, probs, docs, links):
                 {"text": doc, "prob": sorted(prob.tolist())[-5:][::-1], **link}
             )
 
+    for topic, content in topic_docs.items():
+        num_docs = len(content["docs"])
+        topic_docs[topic]["num_docs"] = num_docs
+        topic_docs[topic]["avg_bias"] = 0
+
+        if num_docs > 0:
+            avg_bias = sum([doc["bias"] for doc in content["docs"]]) / num_docs
+            topic_docs[topic]["avg_bias"] = avg_bias
+
     # topic_docs = sorted(topic_docs, key=lambda x: len(topic_docs[x]['docs']))
 
-    with open(
-        f"resources/computed/bert_{'_'.join(news_json.split('_')[1:])}", "w"
-    ) as f:
+    # f"resources/computed/bert_{'_'.join(news_json.split('_')[1:])}", "w"
+    with open("resources/computed/bert_test.json", "w") as f:
         f.write(json.dumps(topic_docs))
 
     return (model, topic_docs)
+
+
+def enrich_docs(news):
+    # news = json.load(open(f"resources/articles/{news_json}"))
+
+    with open("resources/bias/mbfc_bias.json", "r") as f:
+        bias = json.load(f)
+
+    bias_scale = {
+        # "CP": "Conspiracy-Pseudoscience",
+        # "FN": "Questionable Sources",
+        # "PS": "Pro-Science",
+        # "S": "Satire",
+        "L": -1,
+        "LC": -0.5,
+        "C": 0,
+        "RC": 0.5,
+        "R": 1,
+    }
+
+    for a in news["articles"]:
+        a["bias"] = 0
+
+        domain = a.get("clean_url", "")
+        if domain in bias:
+            a["bias"] = bias_scale.get(bias[domain]["b"], 0)
+
+    return news

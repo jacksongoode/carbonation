@@ -9,7 +9,7 @@
 const isOpenClass = 'modal-is-open';
 const openingClass = 'modal-is-opening';
 const closingClass = 'modal-is-closing';
-const animationDuration = 400; // ms
+const animationDuration = 200; // ms
 let visibleModal = null;
 
 

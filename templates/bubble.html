@@ -7,12 +7,16 @@
       <h2>Total topics: {{ data|length }}</h2>
       {% for model in (data|list)[1:] %}
       <div class="row">
-        {% set doc_num = data[model].docs|length * 20 %} {# {% set topic_tags =
+        {# {% set topic_tags =
         [topic for topic in data[model].topic[:-1]] topic[0], {{
         data[model].topic[-1][0] %} #}
         <div
           class="circle"
-          style="height:{{ doc_num }}px; width:{{ doc_num }}px;"
+          style="
+            height: calc({{ data[model].num_docs }}px * 20);
+            width: calc({{ data[model].num_docs }}px * 20);
+            left: calc((50vw - {{ data[model].num_docs }}px) * {{ data[model].avg_bias }});
+            "
           data-target="modal-example-{{ model }}"
           onClick="toggleModal(event)"
         >
@@ -21,60 +25,60 @@
               <b>Topic {{ model }}:</b>
               Size is {{ data[model].docs|length }}
             </span>
-            <!-- Modal -->
-            <dialog id="modal-example-{{ model }}" class="article-modal">
-              <article>
-                <a
-                  href="#close"
-                  aria-label="Close"
-                  class="close"
-                  data-target="modal-example-{{ model }}"
-                  onClick="toggleModal(event)"
-                >
-                </a>
-                <h3>Articles from Topic {{ model }}</h3>
-                <p>
-                  Topic description:
-                  <i>
-                    {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {%
-                    endfor %} {{ data[model].topic[-1][0] }}
-                  </i>
-                </p>
-                <hr />
-                <ul>
-                  {% for doc in data[model].docs %}
-                  <li>
-                    <p>
-                      {{ doc.text }} -
-                      <a href="{{ doc.url }}">{{ doc.author }}</a>
-                    </p>
-                  </li>
-                  {% endfor %}
-                </ul>
-                <footer>
-                  <a
-                    href="#cancel"
-                    role="button"
-                    class="secondary"
-                    data-target="modal-example-{{ model }}"
-                    onClick="toggleModal(event)"
-                  >
-                    Cancel
-                  </a>
-                  <a
-                    href="#confirm"
-                    role="button"
-                    data-target="modal-example-{{ model }}"
-                    onClick="toggleModal(event)"
-                  >
-                    Confirm
-                  </a>
-                </footer>
-              </article>
-            </dialog>
           </div>
         </div>
       </div>
+      <!-- Modal -->
+      <dialog id="modal-example-{{ model }}" class="article-modal">
+        <article>
+          <a
+            href="#close"
+            aria-label="Close"
+            class="close"
+            data-target="modal-example-{{ model }}"
+            onClick="toggleModal(event)"
+          >
+          </a>
+          <h3>Articles from Topic {{ model }}</h3>
+          <p>
+            Topic description:
+            <i>
+              {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {%
+              endfor %} {{ data[model].topic[-1][0] }}
+            </i>
+          </p>
+          <hr />
+          <ul>
+            {% for doc in data[model].docs %}
+            <li>
+              <p>
+                {{ doc.text }} -
+                <a href="{{ doc.link }}">{{ doc.domain }}</a>
+              </p>
+            </li>
+            {% endfor %}
+          </ul>
+          <footer>
+            <a
+              href="#cancel"
+              role="button"
+              class="secondary"
+              data-target="modal-example-{{ model }}"
+              onClick="toggleModal(event)"
+            >
+              Cancel
+            </a>
+            <a
+              href="#confirm"
+              role="button"
+              data-target="modal-example-{{ model }}"
+              onClick="toggleModal(event)"
+            >
+              Confirm
+            </a>
+          </footer>
+        </article>
+      </dialog>
       {% endfor %}
     </main>
   </body>

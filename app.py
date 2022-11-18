@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 
@@ -8,7 +9,12 @@ from flask_compress import Compress
 from newsapi import NewsApiClient
 from newscatcherapi import NewsCatcherApiClient
 
+from analysis import generate_bert
 from utils import get_newsapi, get_newscatcher_headlines, split_url
+
+parser = argparse.ArgumentParser(prog="carbonation", description="Make news!")
+parser.add_argument("-d", "--debug", action="store_true")
+args = parser.parse_args()
 
 # set configuration values
 load_dotenv()
@@ -59,10 +65,27 @@ def render_newscatcher():
 
 @app.route("/model")
 def render_model():
-    model_fn = "bert_4hr_11-05-2022_11:33:12.json"
-    news = json.load(open(f"resources/computed/{model_fn}"))
+    # model_fn = "bert_4hr_11-05-2022_11:33:12.json"
+    model_fn = "bert_test.json"
+    with open(f"resources/computed/{model_fn}", "r") as f:
+        news = json.load(f)
+
     return render_template("bubble.html", data=news)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True, port=os.getenv("PORT", default=5000))
+    if not args.debug:
+        print("Starting scheduler!")
+        scheduler.start()
+        scheduler.add_job(
+            id="generate_bert",
+            func=generate_bert,
+            trigger="interval",
+            hours=4,
+        )
+    app.run(
+        host="0.0.0.0",
+        debug=True,
+        use_reloader=args.debug,
+        port=os.getenv("PORT", default=5000),
+    )

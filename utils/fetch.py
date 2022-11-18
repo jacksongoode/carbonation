@@ -1,7 +1,6 @@
 
 import os
 import json
-from datetime import datetime, timedelta
 
 import requests
 from dotenv import load_dotenv

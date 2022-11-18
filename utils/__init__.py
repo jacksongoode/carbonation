@@ -1,2 +1,25 @@
-from .utils import *
-from .fetch import *
+from .fetch import (
+    download_resource,
+    fetch_allsides,
+    fetch_mbfc,
+    fetch_newsapi_sources,
+    fetch_newscatcher_sources,
+)
+from .utils import (
+    get_newsapi,
+    get_newsapi_headlines,
+    get_newscatcher_headlines,
+    split_url,
+)
+
+__all__ = [
+    "download_resource",
+    "fetch_allsides",
+    "fetch_mbfc",
+    "fetch_newsapi_sources",
+    "fetch_newscatcher_sources",
+    "get_newsapi",
+    "get_newsapi_headlines",
+    "get_newscatcher_headlines",
+    "split_url",
+]

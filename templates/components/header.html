@@ -3,10 +3,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link
-  rel="stylesheet"
-  href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/pico.min.css') }}"
   />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/custom.css') }}"
+  />
   <script src="{{ url_for('static', filename='js/script.js') }}" async></script>
   <title>{{ title }}</title>
 </head>
@@ -21,4 +24,4 @@
     <li><a href="about" role="button">About</a></li>
   </ul>
 </nav>
-<hr></hr>
+<hr />

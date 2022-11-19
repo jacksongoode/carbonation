@@ -1,56 +1,58 @@
 import json
 
 from bertopic import BERTopic
-from gensim.parsing.preprocessing import (
-    preprocess_string,
-    remove_stopwords,
-    strip_multiple_whitespaces,
-    strip_punctuation,
-    strip_short,
-    strip_tags,
-)
-from hdbscan import HDBSCAN
-from sentence_transformers import SentenceTransformer
-from sklearn.feature_extraction.text import CountVectorizer
 
 from utils import *
+
+# from gensim.parsing.preprocessing import (
+#     preprocess_string,
+#     remove_stopwords,
+#     strip_multiple_whitespaces,
+#     strip_punctuation,
+#     strip_short,
+#     strip_tags,
+# )
+# from hdbscan import HDBSCAN
+# from sentence_transformers import SentenceTransformer
+# from sklearn.feature_extraction.text import CountVectorizer
+
 
 # from umap import UMAP
 
 
 news_json = "newscatcher_4hr_11-05-2022_11:33:12.json"
 
-CUSTOM_FILTERS = [
-    lambda x: x.lower(),
-    strip_tags,
-    strip_punctuation,
-    strip_multiple_whitespaces,
-    remove_stopwords,
-    strip_short,
-]
+# CUSTOM_FILTERS = [
+#     lambda x: x.lower(),
+#     strip_tags,
+#     strip_punctuation,
+#     strip_multiple_whitespaces,
+#     remove_stopwords,
+#     strip_short,
+# ]
 
 
-def preprocess(docs):
-    cleaned_docs = [preprocess_string(d, CUSTOM_FILTERS) for d in docs]
-    # cleaned_docs = [[lemmatizer.lemmatize(s) for s in t] for t in cleaned_docs]
+# def preprocess(docs):
+#     cleaned_docs = [preprocess_string(d, CUSTOM_FILTERS) for d in docs]
+#     cleaned_docs = [[lemmatizer.lemmatize(s) for s in t] for t in cleaned_docs]
 
-    return cleaned_docs
+#     return cleaned_docs
 
 
 def bert_model(news=None):
 
-    vectorizer_model = CountVectorizer(
-        ngram_range=(1, 2), strip_accents="ascii", stop_words="english"
-    )
-    embedding_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+    # vectorizer_model = CountVectorizer(
+    #     ngram_range=(1, 2), strip_accents="ascii", stop_words="english"
+    # )
+    # embedding_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     # umap_model = UMAP(n_neighbors=5, n_components=15)
-    hdbscan_model = HDBSCAN(gen_min_span_tree=True, prediction_data=True)
+    # hdbscan_model = HDBSCAN(gen_min_span_tree=True, prediction_data=True)
 
     model = BERTopic(
-        hdbscan_model=hdbscan_model,
-        embedding_model=embedding_model,
+        # hdbscan_model=hdbscan_model,
+        # embedding_model=embedding_model,
         # umap_model=umap_model,
-        vectorizer_model=vectorizer_model,
+        # vectorizer_model=vectorizer_model,
         top_n_words=10,
         language="english",
         calculate_probabilities=True,
@@ -92,7 +94,7 @@ def create_topic_docs(model, topics, probs, docs, links):
     }
 
     for topic, doc, prob, link in zip(topics, docs, probs, links):
-        if max(prob) > 0.5:
+        if max(prob) > 0.25:
             topic_docs[topic]["docs"].append(
                 {"text": doc, "prob": sorted(prob.tolist())[-5:][::-1], **link}
             )

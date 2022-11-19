@@ -12,6 +12,7 @@ from newscatcherapi import NewsCatcherApiClient
 from analysis import generate_bert
 from utils import get_newsapi, get_newscatcher_headlines, split_url
 
+# Parse arguments
 parser = argparse.ArgumentParser(prog="carbonation", description="Make news!")
 parser.add_argument("-d", "--debug", action="store_true")
 args = parser.parse_args()
@@ -31,13 +32,11 @@ app.jinja_env.globals.update(split_url=split_url)
 app.config.from_object(Config())
 Compress(app)
 
-# initialize scheduler
+# Initialize scheduler
 scheduler = APScheduler()
-# if you don't wanna use a config, you can set options here:
-# scheduler.api_enabled = True
 scheduler.init_app(app)
 
-
+# Routing
 @app.route("/")
 @app.route("/about")
 def about():
@@ -65,7 +64,6 @@ def render_newscatcher():
 
 @app.route("/model")
 def render_model():
-    # model_fn = "bert_4hr_11-05-2022_11:33:12.json"
     model_fn = "bert_test.json"
     with open(f"resources/computed/{model_fn}", "r") as f:
         news = json.load(f)

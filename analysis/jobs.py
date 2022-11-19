@@ -12,3 +12,5 @@ def generate_bert():
     print("Successfully generated new model!")
 
     print(f"{len(topic_docs)} topics generated!")
+
+    return

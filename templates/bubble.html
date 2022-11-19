@@ -7,14 +7,13 @@
       <h2>Total topics: {{ data|length }}</h2>
       {% for model in (data|list)[1:] %}
       <div class="row">
-        {# {% set topic_tags =
-        [topic for topic in data[model].topic[:-1]] topic[0], {{
-        data[model].topic[-1][0] %} #}
+        {# {% set topic_tags = [topic for topic in data[model].topic[:-1]]
+        topic[0], {{ data[model].topic[-1][0] %} #}
         <div
           class="circle"
           style="
-            height: calc({{ data[model].num_docs }}px * 20);
-            width: calc({{ data[model].num_docs }}px * 20);
+            height: {{ data[model].num_docs * 10 }}px;
+            width: {{ data[model].num_docs * 10 }}px;
             left: calc((50vw - {{ data[model].num_docs }}px) * {{ data[model].avg_bias }});
             "
           data-target="modal-example-{{ model }}"
@@ -43,8 +42,8 @@
           <p>
             Topic description:
             <i>
-              {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {%
-              endfor %} {{ data[model].topic[-1][0] }}
+              {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {% endfor
+              %} {{ data[model].topic[-1][0] }}
             </i>
           </p>
           <hr />

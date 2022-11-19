@@ -84,7 +84,7 @@ const getScrollbarWidth = () => {
   const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
 
   // Removing temporary elements from the DOM
-  outer.parentNode.removeChild(outer);
+  // outer.parentNode.removeChild(outer);
 
   return scrollbarWidth;
 }

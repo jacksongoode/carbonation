@@ -7,19 +7,20 @@
       <h2>Total topics: {{ data|length }}</h2>
       {% for model in (data|list)[1:] %}
       <div class="row">
-        {# {% set topic_tags = [topic for topic in data[model].topic[:-1]]
-        topic[0], {{ data[model].topic[-1][0] %} #}
+        {% set randRot = range(1,180) | random %}
         <div
           class="circle"
           style="
             height: {{ data[model].num_docs * 10 }}px;
             width: {{ data[model].num_docs * 10 }}px;
             left: calc((50vw - {{ data[model].num_docs }}px) * {{ data[model].avg_bias }});
+            rotate: {{ randRot }}deg;
+            animation-delay: {{ range(1, 1000) | random }}ms;
             "
           data-target="modal-example-{{ model }}"
           onClick="toggleModal(event)"
         >
-          <div>
+          <div style="rotate: -{{ randRot }}deg">
             <span>
               <b>Topic {{ model }}:</b>
               Size is {{ data[model].docs|length }}

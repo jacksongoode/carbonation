@@ -2,6 +2,7 @@ bertopic
 Flask
 Flask-APScheduler
 Flask-Compress
+gunicorn
 newsapi-python
 newscatcherapi
 python-dotenv

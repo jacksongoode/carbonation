@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_apscheduler import APScheduler
+from flask_assets import Bundle, Environment
 from flask_compress import Compress
 from newsapi import NewsApiClient
 from newscatcherapi import NewsCatcherApiClient
@@ -28,6 +29,17 @@ class Config:
 
 
 app = Flask(__name__)
+assets = Environment(app)
+
+sass = Bundle(
+    "sass/custom/reset.sass",
+    "sass/pico/pico.scss",
+    "sass/custom/user.sass",
+    filters="libsass",
+    output="css/style.css",
+)
+assets.register("sass_all", sass)
+
 app.jinja_env.globals.update(split_url=split_url)
 app.config.from_object(Config())
 Compress(app)
@@ -83,7 +95,7 @@ if __name__ == "__main__":
         )
     app.run(
         host="0.0.0.0",
-        debug=True,
+        debug=args.debug,
         use_reloader=args.debug,
         port=os.getenv("PORT", default=5000),
     )

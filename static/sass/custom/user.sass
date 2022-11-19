@@ -1,0 +1,79 @@
+$rnd1: (random(25) + 75)
+$rnd2: (random(25) + 75)
+$rnd3: (random(25) + 75)
+$rnd4: (random(25) + 75)
+$rnd5: (random(25) + 75)
+$rnd6: (random(25) + 75)
+$rnd7: (random(25) + 75)
+$rnd8: (random(25) + 75)
+
+.article
+  padding: 2rem
+  border-radius: 1rem
+  margin-top: 1rem
+  margin-bottom: 1rem
+
+.circle
+  display: flex
+  position: relative
+  text-align: center
+  vertical-align: middle
+  justify-content: center
+  align-items: center
+  /* border-radius: 100%; */
+  background-color: whitesmoke
+  padding: 5px
+  border: 1px solid rgba(0, 0, 0, 0.1)
+
+  border-radius: 100%
+  animation: wobble 5s ease-in-out infinite forwards
+  animation-fill-mode: both
+
+  filter: brightness(1)
+  transform: scale(1)
+  transition-duration: 0.1s, 0.1s
+  transition-delay: 0s, 0s
+  transition-property: filter, transform
+
+  &:hover
+    filter: brightness(0.95)
+    transform: scale(1.05)
+    transition-property: filter, transform
+    transition-duration: 0.2s, 0.2s
+
+.row
+  justify-content: center
+  display: flex
+  margin: 20px 0
+
+.article-modal
+  text-align: left
+
+.theme-switcher
+  position: absolute
+
+@keyframes wobble
+  0%
+    border-radius: $rnd1 * 1% $rnd2 * 1% $rnd3 * 1% $rnd4 * 1% unquote("/") $rnd5 * 1% $rnd6 * 1% $rnd7 * 1% $rnd8 * 1%
+    top: ($rnd1 - $rnd2)+px
+    left: ($rnd2 - $rnd3)+px
+
+  25%
+    border-radius: $rnd8 * 1% $rnd7 * 1% $rnd6 * 1% $rnd5 * 1% unquote("/") $rnd4 * 1% $rnd3 * 1% $rnd2 * 1% $rnd1 * 1%
+    top: ($rnd3 - $rnd4)+px
+    left: ($rnd4 - $rnd5)+px
+
+  50%
+    border-radius: $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1% unquote("/") $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1%
+    top: ($rnd5 - $rnd6)+px
+    left: ($rnd6 - $rnd7)+px
+
+  75%
+    border-radius: $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1% unquote("/") $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1%
+    top: ($rnd7 - $rnd8)+px
+    left: ($rnd8 - $rnd1)+px
+
+  100%
+    border-radius: $rnd1 * 1% $rnd2 * 1% $rnd3 * 1% $rnd4 * 1% unquote("/") $rnd5 * 1% $rnd6 * 1% $rnd7 * 1% $rnd8 * 1%
+    top: ($rnd1 - $rnd2)+px
+    left: ($rnd2 - $rnd3)+px

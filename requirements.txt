@@ -1,6 +1,4 @@
 bertopic
-debugpy
-decorator
 Flask
 Flask-APScheduler
 Flask-Compress

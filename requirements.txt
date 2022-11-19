@@ -1,6 +1,7 @@
 bertopic
 Flask
 Flask-APScheduler
+Flask-Assets
 Flask-Compress
 gunicorn
 newsapi-python

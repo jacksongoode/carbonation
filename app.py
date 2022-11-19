@@ -13,11 +13,6 @@ from newscatcherapi import NewsCatcherApiClient
 from analysis import generate_bert
 from utils import get_newsapi, get_newscatcher_headlines, split_url
 
-# Parse arguments
-parser = argparse.ArgumentParser(prog="carbonation", description="Make news!")
-parser.add_argument("-d", "--debug", action="store_true")
-args = parser.parse_args()
-
 # set configuration values
 load_dotenv()
 catcher = NewsCatcherApiClient(x_api_key=os.environ.get("NEWSCATCHER"))
@@ -84,6 +79,11 @@ def render_model():
 
 
 if __name__ == "__main__":
+    # Parse arguments
+    parser = argparse.ArgumentParser(prog="carbonation", description="Make news!")
+    parser.add_argument("-d", "--debug", action="store_true")
+    args = parser.parse_args()
+
     if not args.debug:
         print("Starting scheduler!")
         scheduler.start()

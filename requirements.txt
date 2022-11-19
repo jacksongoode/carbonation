@@ -2,10 +2,7 @@ bertopic
 Flask
 Flask-APScheduler
 Flask-Compress
-gensim
 newsapi-python
 newscatcherapi
-nltk
 python-dotenv
 requests
-scikit-learn

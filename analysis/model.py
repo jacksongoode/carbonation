@@ -2,8 +2,6 @@ import json
 
 from bertopic import BERTopic
 
-from utils import *
-
 # from gensim.parsing.preprocessing import (
 #     preprocess_string,
 #     remove_stopwords,

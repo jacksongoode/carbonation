@@ -1,4 +1,5 @@
 import json
+from urllib.parse import urlparse
 
 from bertopic import BERTopic
 
@@ -10,15 +11,12 @@ from bertopic import BERTopic
 #     strip_short,
 #     strip_tags,
 # )
+# from umap import UMAP
 # from hdbscan import HDBSCAN
 # from sentence_transformers import SentenceTransformer
-# from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 
-
-# from umap import UMAP
-
-
-news_json = "newscatcher_4hr_11-05-2022_11:33:12.json"
+news_json = "newscatcher_4hr_11-21-2022_02:02:51.json"
 
 # CUSTOM_FILTERS = [
 #     lambda x: x.lower(),
@@ -39,9 +37,9 @@ news_json = "newscatcher_4hr_11-05-2022_11:33:12.json"
 
 def bert_model(news=None):
 
-    # vectorizer_model = CountVectorizer(
-    #     ngram_range=(1, 2), strip_accents="ascii", stop_words="english"
-    # )
+    vectorizer_model = CountVectorizer(
+        ngram_range=(1, 2), strip_accents="ascii", stop_words="english"
+    )
     # embedding_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     # umap_model = UMAP(n_neighbors=5, n_components=15)
     # hdbscan_model = HDBSCAN(gen_min_span_tree=True, prediction_data=True)
@@ -50,7 +48,7 @@ def bert_model(news=None):
         # hdbscan_model=hdbscan_model,
         # embedding_model=embedding_model,
         # umap_model=umap_model,
-        # vectorizer_model=vectorizer_model,
+        vectorizer_model=vectorizer_model,
         top_n_words=10,
         language="english",
         calculate_probabilities=True,
@@ -119,7 +117,23 @@ def enrich_docs(news):
     # news = json.load(open(f"resources/articles/{news_json}"))
 
     with open("resources/bias/mbfc_bias.json", "r") as f:
-        bias = json.load(f)
+        mbfc_bias = json.load(f)
+
+    mbfc_bias = {k: v["b"] for (k, v) in mbfc_bias.items()}
+
+    with open("resources/bias/allsides_bias.json", "r") as f:
+        allsides_bias = json.load(f)["allsides_media_bias_ratings"]
+
+    # For AllSides compose dict
+    allsides_bias = {
+        ".".join(urlparse(s["source_url"]).netloc.split(".")[-2:]): s[
+            "media_bias_rating"
+        ]
+        for s in allsides_bias
+        if s["source_url"] != ""
+    }
+
+    bias = mbfc_bias | allsides_bias
 
     bias_scale = {
         # "CP": "Conspiracy-Pseudoscience",
@@ -127,10 +141,16 @@ def enrich_docs(news):
         # "PS": "Pro-Science",
         # "S": "Satire",
         "L": -1,
+        "Left": -1,
         "LC": -0.5,
+        "Lean Left": -0.5,
         "C": 0,
+        "Center": 0,
+        "Mixed": 0,
         "RC": 0.5,
+        "Lean Right": 0.5,
         "R": 1,
+        "Right": 1,
     }
 
     for a in news["articles"]:
@@ -138,6 +158,6 @@ def enrich_docs(news):
 
         domain = a.get("clean_url", "")
         if domain in bias:
-            a["bias"] = bias_scale.get(bias[domain]["b"], 0)
+            a["bias"] = bias_scale.get(bias[domain], 0)
 
     return news

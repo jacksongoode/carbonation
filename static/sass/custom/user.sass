@@ -1,3 +1,7 @@
+@import "../pico/variables"
+
+// Variables
+
 $rnd1: (random(25) + 75)
 $rnd2: (random(25) + 75)
 $rnd3: (random(25) + 75)
@@ -7,27 +11,21 @@ $rnd6: (random(25) + 75)
 $rnd7: (random(25) + 75)
 $rnd8: (random(25) + 75)
 
-.article
-  padding: 2rem
-  border-radius: 1rem
-  margin-top: 1rem
-  margin-bottom: 1rem
+.page-title
+  text-align: center
 
-.circle
+.row
+  justify-content: center
   display: flex
+  padding: 10px 0
+
+.bubble
   position: relative
+  display: flex
   text-align: center
   vertical-align: middle
   justify-content: center
   align-items: center
-  /* border-radius: 100%; */
-  background-color: whitesmoke
-  padding: 5px
-  border: 1px solid rgba(0, 0, 0, 0.1)
-
-  border-radius: 100%
-  animation: wobble 5s ease-in-out infinite forwards
-  animation-fill-mode: both
 
   filter: brightness(1)
   transform: scale(1)
@@ -35,45 +33,71 @@ $rnd8: (random(25) + 75)
   transition-delay: 0s, 0s
   transition-property: filter, transform
 
+  span
+    position: absolute
+    z-index: 99
+
   &:hover
     filter: brightness(0.95)
     transform: scale(1.05)
     transition-property: filter, transform
     transition-duration: 0.2s, 0.2s
 
-.row
-  justify-content: center
-  display: flex
-  margin: 20px 0
+  .circle
+    background-color: whitesmoke
+    padding: 5px
+    border: 1px solid rgba(0, 0, 0, 0.1)
+    border-radius: 100%
+    animation: wobble 8s ease-in-out infinite forwards
+    animation-fill-mode: both
+
+.line-break
+  margin: var(--spacing) 0
+
+// Corrections to pico.css
 
 .article-modal
   text-align: left
+  margin: auto
 
-.theme-switcher
-  position: absolute
+  article
+    border-radius: 1rem
+
+  h2
+    margin-bottom: 1rem
+
+// Weird, phones have extra padding on top?
+article
+  @if map-get($breakpoints, "sm")
+    @media (max-width: map-get($breakpoints, "sm"))
+      max-height: calc(100vh - var(--spacing) * 6)
+
+// Way too wide
+@if ($enable-class-container and $enable-classes)
+  .container
+    @if map-get($breakpoints, "xl")
+      @media (min-width: map-get($breakpoints, "xl"))
+        max-width: map-get($viewports, "lg")
+
+// Animations
 
 @keyframes wobble
   0%
     border-radius: $rnd1 * 1% $rnd2 * 1% $rnd3 * 1% $rnd4 * 1% unquote("/") $rnd5 * 1% $rnd6 * 1% $rnd7 * 1% $rnd8 * 1%
-    top: ($rnd1 - $rnd2)+px
-    left: ($rnd2 - $rnd3)+px
+    transform: translate(($rnd1 - $rnd2)+px, ($rnd2 - $rnd3)+px)
 
   25%
     border-radius: $rnd8 * 1% $rnd7 * 1% $rnd6 * 1% $rnd5 * 1% unquote("/") $rnd4 * 1% $rnd3 * 1% $rnd2 * 1% $rnd1 * 1%
-    top: ($rnd3 - $rnd4)+px
-    left: ($rnd4 - $rnd5)+px
+    transform: translate(($rnd3 - $rnd4)+px, ($rnd4 - $rnd5)+px)
 
   50%
     border-radius: $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1% unquote("/") $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1%
-    top: ($rnd5 - $rnd6)+px
-    left: ($rnd6 - $rnd7)+px
+    transform: translate(($rnd5 - $rnd6)+px, ($rnd6 - $rnd7)+px)
 
   75%
     border-radius: $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1% unquote("/") $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1%
-    top: ($rnd7 - $rnd8)+px
-    left: ($rnd8 - $rnd1)+px
+    transform: translate(($rnd7 - $rnd8)+px, ($rnd8 - $rnd1)+px)
 
   100%
     border-radius: $rnd1 * 1% $rnd2 * 1% $rnd3 * 1% $rnd4 * 1% unquote("/") $rnd5 * 1% $rnd6 * 1% $rnd7 * 1% $rnd8 * 1%
-    top: ($rnd1 - $rnd2)+px
-    left: ($rnd2 - $rnd3)+px
+    transform: translate(($rnd1 - $rnd2)+px, ($rnd2 - $rnd3)+px)

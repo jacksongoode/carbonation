@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html data-theme="light">
+  {% include 'components/head.html' %}
   <body>
     <main class="container">
-      {% with title="NewsAPI" %} {% include 'components/header.html' %} {%
-      endwith %}
+      {% with title="NewsAPI" %} {% include 'components/nav.html' %} {%
+      endwith%}
       <h2>Total results found: {{ data.total_results }}</h2>
       {% for item in data.articles %}
       <article class="article">

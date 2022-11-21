@@ -29,7 +29,7 @@ def get_newscatcher_headlines(hours, sources=None, max_page=1):
         lang='en',
         sources=sources,
         max_page=max_page,
-        seconds_pause=2.0,
+        seconds_pause=1.0,
     )
 
     return articles

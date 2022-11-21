@@ -10,7 +10,6 @@ from flask_compress import Compress
 from newsapi import NewsApiClient
 from newscatcherapi import NewsCatcherApiClient
 
-from analysis import generate_bert
 from utils import get_newsapi, get_newscatcher_headlines, split_url
 
 # set configuration values
@@ -27,8 +26,7 @@ app = Flask(__name__)
 assets = Environment(app)
 
 sass = Bundle(
-    "sass/custom/reset.sass",
-    "sass/pico/pico.scss",
+    # "sass/custom/reset.sass",
     "sass/custom/user.sass",
     filters="libsass",
     output="css/style.css",
@@ -85,6 +83,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.debug:
+        from analysis import generate_bert
+
         print("Starting scheduler!")
         scheduler.start()
         scheduler.add_job(
@@ -93,6 +93,8 @@ if __name__ == "__main__":
             trigger="interval",
             hours=4,
         )
+
+    print("Starting Flask!")
     app.run(
         host="0.0.0.0",
         debug=args.debug,

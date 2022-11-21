@@ -1,0 +1,10 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/pico.min.css') }}">
+  {% assets "sass_all" %}
+  <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
+  {% endassets %}
+  <script src="{{ url_for('static', filename='js/script.js') }}" async></script>
+  <title>{{ title }}</title>
+</head>

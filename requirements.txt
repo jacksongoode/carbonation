@@ -1,10 +1,8 @@
 bertopic
-Flask
-Flask-APScheduler
-Flask-Assets
-Flask-Compress
-gunicorn
+fastapi
+jinja2
 newsapi-python
 newscatcherapi
 python-dotenv
 requests
+uvicorn[standard]

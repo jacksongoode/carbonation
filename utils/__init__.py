@@ -4,6 +4,7 @@ from .fetch import (
     fetch_mbfc,
     fetch_newsapi_sources,
     fetch_newscatcher_sources,
+    write_bias
 )
 from .utils import (
     get_newsapi,
@@ -22,4 +23,5 @@ __all__ = [
     "get_newsapi_headlines",
     "get_newscatcher_headlines",
     "split_url",
+    "write_bias"
 ]

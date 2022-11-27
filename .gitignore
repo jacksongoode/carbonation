@@ -4,6 +4,7 @@
 .ipynb_checkpoints/
 .deta/
 resources/articles/*
+.python_version
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -11,6 +11,19 @@ $rnd6: (random(25) + 75)
 $rnd7: (random(25) + 75)
 $rnd8: (random(25) + 75)
 
+@font-face
+  font-family: "League Spartan"
+  src: local("League Spartan"), url("../fonts/LeagueSpartan-VF.woff2") format("woff2")
+
+body
+  font-family: "League Spartan"
+
+.wave
+  border: 2px solid black
+  background-repeat: repeat-x
+  background-size: 1600px 50%
+  background-position: 0 130%, -50px 130%, 500px 130%
+
 .page-title
   text-align: center
 
@@ -82,7 +95,8 @@ article
 // Animations
 
 @keyframes wobble
-  0%
+  0%,
+  100%
     border-radius: $rnd1 * 1% $rnd2 * 1% $rnd3 * 1% $rnd4 * 1% unquote("/") $rnd5 * 1% $rnd6 * 1% $rnd7 * 1% $rnd8 * 1%
     transform: translate(($rnd1 - $rnd2)+px, ($rnd2 - $rnd3)+px)
 
@@ -98,6 +112,6 @@ article
     border-radius: $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1% unquote("/") $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1%
     transform: translate(($rnd7 - $rnd8)+px, ($rnd8 - $rnd1)+px)
 
-  100%
-    border-radius: $rnd1 * 1% $rnd2 * 1% $rnd3 * 1% $rnd4 * 1% unquote("/") $rnd5 * 1% $rnd6 * 1% $rnd7 * 1% $rnd8 * 1%
-    transform: translate(($rnd1 - $rnd2)+px, ($rnd2 - $rnd3)+px)
+@keyframes waves
+  to
+    background-position: 1600px 130%, 3150px 130%, 5300px 130%

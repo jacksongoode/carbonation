@@ -1,6 +1,9 @@
 # User
 .trunk/
-.DS_Store
+**/.DS_Store
+.ipynb_checkpoints/
+.deta/
+resources/articles/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

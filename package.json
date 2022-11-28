@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "sass-dev": "sass --watch --update --style=expanded static/sass/custom/user.sass:static/css/style.css",
+    "sass-prod": "sass --no-source-map --style=compressed static/sass/custom/user.sass:static/css/style.css"
+  },
+  "devDependencies": {
+    "sass": "^1.56.1"
+  }
+}

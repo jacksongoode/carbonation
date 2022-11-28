@@ -1,71 +1,85 @@
 <!DOCTYPE html>
 <html data-theme="light">
 {% include 'components/head.html' %}
-<div class="container">
-  <div class="wave"></div>
-  <body>
-    <main class="container">
-      {% with title="Model" %} {% include 'components/nav.html' %} {% endwith%}
-      <h1 class="page-title">Total topics: {{ data|length }}</h1>
-      {% for model in (data|list)[1:] %}
-      {% set randRot = range(1,360) | random %}
 
-      <div class="row">
-        <div class="bubble" style="left: calc((50vw - {{ data[model].num_docs }}px) * {{ data[model].avg_bias * 2}});"
-          data-target="modal-example-{{ model }}" onClick="toggleModal(event)">
-          <!-- Topic Description -->
-          <span style="font-size: clamp(0.5rem, {{ data[model].num_docs / 1.5 }}px, 1.5rem);">
-            {% for topic in data[model].topic[:5] %}{{ topic[0] }}, {% endfor%}
-            <!-- {{ data[model].topic[-1][0] }} -->
-          </span>
+<body>
+  <main class="container">
+    {% with title="Model" %} {% include 'components/nav.html' %} {% endwith%}
+    <h1 class="page-title">Total topics: {{ data|length }}</h1>
 
-          <!-- Topic circle -->
-          <div class=" circle" style="
+    <!-- Wave! -->
+    <div>
+      <svg class="wave" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" stroke="grey" stroke-width="0.75" fill="none" />
+          <use xlink:href="#gentle-wave" x="48" y="3" stroke="grey" stroke-width="0.5" fill="none" />
+        </g>
+      </svg>
+    </div>
+
+    {% for model in (data|list)[1:] %}
+    {% set randRot = range(1,360) | random %}
+
+    <div class="row">
+      <div class="bubble" style="left: calc((50vw - {{ data[model].num_docs }}px) * {{ data[model].avg_bias * 2}});"
+        data-target="modal-example-{{ model }}" onClick="toggleModal(event)">
+        <!-- Topic Description -->
+        <span style="font-size: clamp(0.5rem, {{ data[model].num_docs / 1.5 }}px, 1.5rem);">
+          {% for topic in data[model].topic[:5] %}{{ topic[0] }}, {% endfor%}
+          <!-- {{ data[model].topic[-1][0] }} -->
+        </span>
+
+        <!-- Topic circle -->
+        <div class=" circle" style="
           height: {{ data[model].num_docs * 4}}px;
           width: {{ data[model].num_docs * 4}}px;
           rotate: {{ randRot }}deg;
           animation-delay: {{ range(1, 1000) | random }}ms;
           ">
-          </div>
         </div>
       </div>
+    </div>
 
-      <!-- Modal -->
-      <dialog id="modal-example-{{ model }}" class="article-modal">
-        <article>
-          <div>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-example-{{ model }}"
-              onClick="toggleModal(event)">
-            </a>
-          </div>
-          <h2>Topic {{ model }}: {{ data[model].docs|length }}</h2>
-          <p>
-            Topic description:
-            <i>
-              {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {% endfor
-              %} {{ data[model].topic[-1][0] }}
-            </i>
-          </p>
-          <hr class="line-break" />
-          <ul>
-            {% for doc in data[model].docs[:20] %}
-            <li>
-              <p>
-                {{ doc.text }} -
-                <a href="{{ doc.link }}">{{ doc.domain }}</a>
-              </p>
-            </li>
-            {% endfor %}
-          </ul>
-          <a href="#confirm" role="button" data-target="modal-example-{{ model }}" onClick="toggleModal(event)">
-            Return
+    <!-- Modal -->
+    <dialog id="modal-example-{{ model }}" class="article-modal">
+      <article>
+        <div>
+          <a href="#close" aria-label="Close" class="close" data-target="modal-example-{{ model }}"
+            onClick="toggleModal(event)">
           </a>
-          </footer>
-        </article>
-      </dialog>
+        </div>
+        <h2>Topic {{ model }}: {{ data[model].docs|length }}</h2>
+        <p>
+          Topic description:
+          <i>
+            {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {% endfor
+            %} {{ data[model].topic[-1][0] }}
+          </i>
+        </p>
+        <hr class="line-break" />
+        <ul>
+          {% for doc in data[model].docs[:20] %}
+          <li>
+            <p>
+              {{ doc.text }} -
+              <a href="{{ doc.link }}">{{ doc.domain }}</a>
+            </p>
+          </li>
+          {% endfor %}
+        </ul>
+        <a href="#confirm" role="button" data-target="modal-example-{{ model }}" onClick="toggleModal(event)">
+          Return
+        </a>
+        </footer>
+      </article>
+    </dialog>
 
-      {% endfor %}
-    </main>
-  </body>
+    {% endfor %}
+  </main>
+</body>
 
 </html>

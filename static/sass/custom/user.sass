@@ -18,12 +18,6 @@ $rnd8: (random(25) + 75)
 body
   font-family: "League Spartan"
 
-.wave
-  border: 2px solid black
-  background-repeat: repeat-x
-  background-size: 1600px 50%
-  background-position: 0 130%, -50px 130%, 500px 130%
-
 .page-title
   text-align: center
 
@@ -112,6 +106,23 @@ article
     border-radius: $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1% unquote("/") $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1%
     transform: translate(($rnd7 - $rnd8)+px, ($rnd8 - $rnd1)+px)
 
-@keyframes waves
-  to
-    background-position: 1600px 130%, 3150px 130%, 5300px 130%
+.wave
+  display: relative
+  position: absolute
+  left: 0
+  width: 100%
+  height: 10vh
+
+.parallax > use
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite
+
+  &:nth-child(1)
+    animation-delay: -2s
+    animation-duration: 7s
+
+@keyframes move-forever
+  0%
+    transform: translate3d(-90px, 0, 0)
+
+  100%
+    transform: translate3d(85px, 0, 0)

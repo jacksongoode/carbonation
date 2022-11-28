@@ -1,23 +1,20 @@
 @font-face {
   font-family: "League Spartan";
-  src: local("League Spartan"), url("../fonts/LeagueSpartan-VF.woff2") format("woff2"); }
-
+  src: local("League Spartan"), url("../fonts/LeagueSpartan-VF.woff2") format("woff2");
+}
 body {
-  font-family: "League Spartan"; }
-
-.wave {
-  border: 2px solid black;
-  background-repeat: repeat-x;
-  background-size: 1600px 50%;
-  background-position: 0 130%, -50px 130%, 500px 130%; }
+  font-family: "League Spartan";
+}
 
 .page-title {
-  text-align: center; }
+  text-align: center;
+}
 
 .row {
   justify-content: center;
   display: flex;
-  padding: 10px 0; }
+  padding: 10px 0;
+}
 
 .bubble {
   position: relative;
@@ -30,59 +27,95 @@ body {
   transform: scale(1);
   transition-duration: 0.1s, 0.1s;
   transition-delay: 0s, 0s;
-  transition-property: filter, transform; }
-  .bubble span {
-    position: absolute;
-    z-index: 99; }
-  .bubble:hover {
-    filter: brightness(0.95);
-    transform: scale(1.05);
-    transition-property: filter, transform;
-    transition-duration: 0.2s, 0.2s; }
-  .bubble .circle {
-    background-color: whitesmoke;
-    padding: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 100%;
-    animation: wobble 8s ease-in-out infinite forwards;
-    animation-fill-mode: both; }
+  transition-property: filter, transform;
+}
+.bubble span {
+  position: absolute;
+  z-index: 99;
+}
+.bubble:hover {
+  filter: brightness(0.95);
+  transform: scale(1.05);
+  transition-property: filter, transform;
+  transition-duration: 0.2s, 0.2s;
+}
+.bubble .circle {
+  background-color: whitesmoke;
+  padding: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 100%;
+  animation: wobble 8s ease-in-out infinite forwards;
+  animation-fill-mode: both;
+}
 
 .line-break {
-  margin: var(--spacing) 0; }
+  margin: var(--spacing) 0;
+}
 
 .article-modal {
   text-align: left;
-  margin: auto; }
-  .article-modal article {
-    border-radius: 1rem; }
-  .article-modal h2 {
-    margin-bottom: 1rem; }
+  margin: auto;
+}
+.article-modal article {
+  border-radius: 1rem;
+}
+.article-modal h2 {
+  margin-bottom: 1rem;
+}
 
 @media (max-width: 576px) {
   article {
-    max-height: calc(100vh - var(--spacing) * 6); } }
+    max-height: calc(100vh - var(--spacing) * 6);
+  }
+}
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 920px; } }
+    max-width: 920px;
+  }
+}
 
 @keyframes wobble {
-  0% {
-    border-radius: 91% 87% 83% 79% / 92% 90% 79% 98%;
-    transform: translate(4px, 4px); }
+  0%, 100% {
+    border-radius: 95% 97% 76% 82% / 89% 96% 86% 82%;
+    transform: translate(-2px, 21px);
+  }
   25% {
-    border-radius: 98% 79% 90% 92% / 79% 83% 87% 91%;
-    transform: translate(4px, -13px); }
+    border-radius: 82% 86% 96% 89% / 82% 76% 97% 95%;
+    transform: translate(-6px, -7px);
+  }
   50% {
-    border-radius: 91% 83% 92% 79% / 87% 79% 90% 98%;
-    transform: translate(2px, 11px); }
+    border-radius: 95% 76% 89% 86% / 97% 82% 96% 82%;
+    transform: translate(-7px, 10px);
+  }
   75% {
-    border-radius: 87% 79% 90% 98% / 91% 83% 92% 79%;
-    transform: translate(-19px, 7px); }
-  100% {
-    border-radius: 91% 87% 83% 79% / 92% 90% 79% 98%;
-    transform: translate(4px, 4px); } }
+    border-radius: 97% 82% 96% 82% / 95% 76% 89% 86%;
+    transform: translate(4px, -13px);
+  }
+}
+.wave {
+  display: relative;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 10vh;
+}
 
-@keyframes waves {
-  to {
-    background-position: 1600px 130%, 3150px 130%, 5300px 130%; } }
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

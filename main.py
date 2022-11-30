@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 
+import arel
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
@@ -17,6 +18,14 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 # app.jinja_env.globals.update(split_url=split_url)
+
+# if _debug := os.getenv("DEBUG"):
+#     hot_reload = arel.HotReload(paths=[arel.Path(".")])
+#     app.add_websocket_route("/hot-reload", route=hot_reload, name="hot-reload")
+#     app.add_event_handler("startup", hot_reload.startup)
+#     app.add_event_handler("shutdown", hot_reload.shutdown)
+#     templates.env.globals["DEBUG"] = _debug
+#     templates.env.globals["hot_reload"] = hot_reload
 
 # set configuration values
 load_dotenv()

@@ -77,44 +77,49 @@ body {
 
 @keyframes wobble {
   0%, 100% {
-    border-radius: 83% 87% 81% 81% / 93% 76% 82% 79%;
-    transform: translate(-4px, 6px);
+    border-radius: 93% 83% 84% 99% / 78% 91% 99% 79%;
+    transform: translate(10px, -1px);
   }
   25% {
-    border-radius: 79% 82% 76% 93% / 81% 81% 87% 83%;
-    transform: translate(0px, -12px);
+    border-radius: 79% 99% 91% 78% / 99% 84% 83% 93%;
+    transform: translate(-15px, 21px);
   }
   50% {
-    border-radius: 83% 81% 93% 82% / 87% 81% 76% 79%;
-    transform: translate(17px, -6px);
+    border-radius: 93% 84% 78% 99% / 83% 99% 91% 79%;
+    transform: translate(-13px, -8px);
   }
   75% {
-    border-radius: 87% 81% 76% 79% / 83% 81% 93% 82%;
-    transform: translate(3px, -4px);
+    border-radius: 83% 99% 91% 79% / 93% 84% 78% 99%;
+    transform: translate(20px, -14px);
   }
 }
-.wave {
+.sea {
   display: relative;
   position: absolute;
   left: 0;
-  width: 100%;
   height: 10vh;
+  width: 250%;
 }
-
-.parallax > use {
-  animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+.sea #wave {
+  animation: move-forever 10s cubic-bezier(0.6, 0.5, 0.4, 0.5) infinite;
 }
-.parallax > use:nth-child(1) {
-  animation-delay: -2s;
-  animation-duration: 7s;
+.sea path {
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke-width: 1;
 }
 
 @keyframes move-forever {
   0% {
-    transform: translate3d(-90px, 0, 0);
+    transform: translate3d(-150px, 0, 0);
+  }
+  25% {
+    transform: translate3d(-112.5px, 2px, 0);
+  }
+  75% {
+    transform: translate3d(-37.5px, -2px, 0);
   }
   100% {
-    transform: translate3d(85px, 0, 0);
+    transform: translate3d(0px, 0, 0);
   }
 }
 

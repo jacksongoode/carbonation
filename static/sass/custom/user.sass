@@ -106,23 +106,32 @@ article
     border-radius: $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1% unquote("/") $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1%
     transform: translate(($rnd7 - $rnd8)+px, ($rnd8 - $rnd1)+px)
 
-.wave
+.sea
   display: relative
   position: absolute
   left: 0
-  width: 100%
   height: 10vh
+  width: 250%
 
-.parallax > use
-  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite
+  #wave
+    animation: move-forever 10s cubic-bezier(.6,.5,.4,.5) infinite
 
-  &:nth-child(1)
-    animation-delay: -2s
-    animation-duration: 7s
+  path
+    stroke: rgba(0,0,0,0.5)
+    stroke-width: 1
+
+  // svg
+  //   mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 20%)
 
 @keyframes move-forever
   0%
-    transform: translate3d(-90px, 0, 0)
+    transform: translate3d(-150px, 0, 0)
+
+  25%
+    transform: translate3d(-112.5px, 2px, 0)
+
+  75%
+    transform: translate3d(-37.5px, -2px, 0)
 
   100%
-    transform: translate3d(85px, 0, 0)
+    transform: translate3d(0px, 0, 0)

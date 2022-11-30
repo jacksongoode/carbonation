@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html data-theme="light">
-{% include 'components/head.html' %}
+  {% include 'components/head.html' %}
 
-<body>
-  <main class="container">
-    {% with title="About" %} {% include 'components/nav.html' %} {% endwith%}
-    <h2>Why?</h2>
-    <p>
-      At a glance, carbonation uses NLP to do topic modelling over the current
-      news by grouping similar articles based on headlines (and summaries if
-      available!) and provide topics with bias ratings. carbonation allows a
-      reader to get an immediate sense of the current news and allows one to
-      learn which topics are covered more often by progressive or conservative
-      outlets.
-    </p>
-    <h2>How?</h2>
-    <p>
-      It does so by leveraging the NewsCatcher API to retrieve articles and
-      summaries from the most popular news publishers.
-    </p>
-    <p>Built with Flask.</p>
-  </main>
-</body>
-
+  <body>
+    <main class="container">
+      {% with title="About" %} {% include 'components/nav.html' %} {% endwith%}
+      <h2>Why?</h2>
+      <p>
+        At a glance, carbonation uses NLP to do topic modelling over the current
+        news by grouping similar articles based on headlines (and summaries if
+        available!) and provide topics with bias ratings. carbonation allows a
+        reader to get an immediate sense of the current news and allows one to
+        learn which topics are covered more often by progressive or conservative
+        outlets.
+      </p>
+      <h2>How?</h2>
+      <p>
+        It does so by leveraging the NewsCatcher API to retrieve articles and
+        summaries from the most popular news publishers.
+      </p>
+      <p>Built with Flask.</p>
+    </main>
+  </body>
 </html>

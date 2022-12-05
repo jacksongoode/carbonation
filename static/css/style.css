@@ -77,49 +77,54 @@ body {
 
 @keyframes wobble {
   0%, 100% {
-    border-radius: 93% 83% 84% 99% / 78% 91% 99% 79%;
-    transform: translate(10px, -1px);
+    border-radius: 84% 98% 86% 98% / 100% 79% 84% 92%;
+    transform: translate(-14px, 12px);
   }
   25% {
-    border-radius: 79% 99% 91% 78% / 99% 84% 83% 93%;
-    transform: translate(-15px, 21px);
+    border-radius: 92% 84% 79% 100% / 98% 86% 98% 84%;
+    transform: translate(-12px, -2px);
   }
   50% {
-    border-radius: 93% 84% 78% 99% / 83% 99% 91% 79%;
-    transform: translate(-13px, -8px);
+    border-radius: 84% 86% 100% 84% / 98% 98% 79% 92%;
+    transform: translate(21px, -5px);
   }
   75% {
-    border-radius: 83% 99% 91% 79% / 93% 84% 78% 99%;
-    transform: translate(20px, -14px);
+    border-radius: 98% 98% 79% 92% / 84% 86% 100% 84%;
+    transform: translate(-8px, 8px);
   }
 }
 .sea {
-  display: relative;
-  position: absolute;
   left: 0;
-  height: 10vh;
-  width: 250%;
+  width: 100%;
+  position: absolute;
+  display: relative;
+  overflow: clip;
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 5%, rgb(0, 0, 0) 25%, rgb(0, 0, 0) 75%, rgba(0, 0, 0, 0) 95%);
 }
-.sea #wave {
-  animation: move-forever 10s cubic-bezier(0.6, 0.5, 0.4, 0.5) infinite;
+.sea svg {
+  height: 5vh;
+  width: 200%;
 }
-.sea path {
+.sea svg #wave {
+  animation: move-forever 4s cubic-bezier(0.6, 0.5, 0.4, 0.5) infinite;
+}
+.sea svg path {
   stroke: rgba(0, 0, 0, 0.5);
-  stroke-width: 1;
+  stroke-width: 2;
 }
 
 @keyframes move-forever {
   0% {
-    transform: translate3d(-150px, 0, 0);
+    transform: translate3d(0px, 0, 0);
   }
   25% {
-    transform: translate3d(-112.5px, 2px, 0);
-  }
-  75% {
     transform: translate3d(-37.5px, -2px, 0);
   }
+  75% {
+    transform: translate3d(-112.5px, 2px, 0);
+  }
   100% {
-    transform: translate3d(0px, 0, 0);
+    transform: translate3d(-150px, 0, 0);
   }
 }
 

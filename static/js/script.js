@@ -28,9 +28,9 @@ const isModalOpen = modal => {
 
 // Open modal
 const openModal = modal => {
-  if (isScrollbarVisible()) {
-    document.documentElement.style.setProperty('--scrollbar-width', `${getScrollbarWidth()}px`);
-  }
+  // if (isScrollbarVisible()) {
+  //   document.documentElement.style.setProperty('--scrollbar-width', `${getScrollbarWidth()}px`);
+  // }
   document.documentElement.classList.add(isOpenClass, openingClass);
   setTimeout(() => {
     visibleModal = modal;
@@ -84,7 +84,7 @@ const getScrollbarWidth = () => {
   const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
 
   // Removing temporary elements from the DOM
-  // outer.parentNode.removeChild(outer);
+  outer.parentNode.removeChild(outer);
 
   return scrollbarWidth;
 }

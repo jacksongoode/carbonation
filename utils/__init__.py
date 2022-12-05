@@ -11,6 +11,7 @@ from .utils import (
     get_newsapi_headlines,
     get_newscatcher_headlines,
     split_url,
+    rank_sources
 )
 
 __all__ = [
@@ -23,5 +24,6 @@ __all__ = [
     "get_newsapi_headlines",
     "get_newscatcher_headlines",
     "split_url",
-    "write_bias"
+    "write_bias",
+    "rank_sources"
 ]

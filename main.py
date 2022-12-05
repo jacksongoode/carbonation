@@ -2,7 +2,6 @@ import argparse
 import json
 import os
 
-import arel
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
@@ -19,15 +18,27 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 # app.jinja_env.globals.update(split_url=split_url)
 
-# if _debug := os.getenv("DEBUG"):
-#     hot_reload = arel.HotReload(paths=[arel.Path(".")])
-#     app.add_websocket_route("/hot-reload", route=hot_reload, name="hot-reload")
-#     app.add_event_handler("startup", hot_reload.startup)
-#     app.add_event_handler("shutdown", hot_reload.shutdown)
-#     templates.env.globals["DEBUG"] = _debug
-#     templates.env.globals["hot_reload"] = hot_reload
+# Hot reload
+if _debug := os.getenv("DEBUG"):
+    import arel
 
-# set configuration values
+    hot_reload = arel.HotReload(
+        paths=[
+            arel.Path("./static"),
+            arel.Path("./templates"),
+            arel.Path("./utils"),
+            arel.Path("./resources"),
+            arel.Path("./analysis"),
+            arel.Path("main.py")
+        ],
+    )
+    app.add_websocket_route("/hot-reload", route=hot_reload, name="hot-reload")
+    app.add_event_handler("startup", hot_reload.startup)
+    app.add_event_handler("shutdown", hot_reload.shutdown)
+    templates.env.globals["DEBUG"] = _debug
+    templates.env.globals["hot_reload"] = hot_reload
+
+# Set configuration values
 load_dotenv()
 catcher = NewsCatcherApiClient(x_api_key=os.environ.get("NEWSCATCHER"))
 newsapi = NewsApiClient(api_key=os.environ.get("NEWSAPI"))
@@ -72,22 +83,5 @@ def render_model(request: Request):
 
 
 if __name__ == "__main__":
-    # Parse arguments
-    parser = argparse.ArgumentParser(prog="carbonation", description="Make news!")
-    parser.add_argument("-d", "--debug", action="store_true")
-    args = parser.parse_args()
-
-    # if not args.debug:
-    #     from analysis import generate_bert
-
-    #     print("Starting scheduler!")
-    #     scheduler.start()
-    #     scheduler.add_job(
-    #         id="generate_bert",
-    #         func=generate_bert,
-    #         trigger="interval",
-    #         hours=4,
-    #     )
-
     print("Starting!")
     uvicorn.run("main:app", port=8080, log_level="info")

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html data-theme="light">
-{% include 'components/head.html' %}
+<html data-theme="light" lang="en">
+{% with title="Model" %} {% include 'components/head.html' %} {% endwith %}
 
 <body>
   <main class="container">
@@ -8,8 +8,8 @@
     <h1 class="page-title">Total topics: {{ data|length }}</h1>
 
     <!-- Wave! -->
-    <div>
-      <svg class="sea" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    <div class="sea">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         viewBox="0 -22.5 300 30" preserveAspectRatio="none" shape-rendering="auto">
         <g>
           <path id="wave" fill="none" d="M 0 0 c 15 0 50 -15 75 -15 s 50 15 75 15 s 50 -15 75 -15 s 50 15 75 15"></path>
@@ -31,11 +31,11 @@
 
         <!-- Topic circle -->
         <div class=" circle" style="
-          height: {{ data[model].num_docs * 4}}px;
-          width: {{ data[model].num_docs * 4}}px;
-          rotate: {{ randRot }}deg;
-          animation-delay: {{ range(1, 1000) | random }}ms;
-          ">
+            height: {{ data[model].num_docs * 4}}px;
+            width: {{ data[model].num_docs * 4}}px;
+            rotate: {{ randRot }}deg;
+            animation-delay: {{ range(1, 1000) | random }}ms;
+            ">
         </div>
       </div>
     </div>
@@ -51,6 +51,7 @@
         <h2>Topic {{ model }}: {{ data[model].docs|length }}</h2>
         <p>
           Topic description:
+          <br>
           <i>
             {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {% endfor
             %} {{ data[model].topic[-1][0] }}
@@ -61,8 +62,10 @@
           {% for doc in data[model].docs[:20] %}
           <li>
             <p>
-              {{ doc.text }} -
-              <a href="{{ doc.link }}">{{ doc.domain }}</a>
+              {{ doc.text }}
+              <br>
+              <a href="{{ doc.link }}">{{ doc.domain }}</a> -
+              Bias: {{ doc.bias }}
             </p>
           </li>
           {% endfor %}
@@ -76,6 +79,7 @@
 
     {% endfor %}
   </main>
+  {% if DEBUG %} {{ hot_reload.script(url_for('hot-reload')) | safe }} {% endif %}
 </body>
 
 </html>

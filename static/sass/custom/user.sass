@@ -107,31 +107,33 @@ article
     transform: translate(($rnd7 - $rnd8)+px, ($rnd8 - $rnd1)+px)
 
 .sea
-  display: relative
-  position: absolute
   left: 0
-  height: 10vh
-  width: 250%
+  width: 100%
+  position: absolute
+  display: relative
+  overflow: clip
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 95%)
 
-  #wave
-    animation: move-forever 10s cubic-bezier(.6,.5,.4,.5) infinite
+  svg
+    height: 5vh
+    width: 200%
 
-  path
-    stroke: rgba(0,0,0,0.5)
-    stroke-width: 1
+    #wave
+      animation: move-forever 4s cubic-bezier(.6,.5,.4,.5) infinite
 
-  // svg
-  //   mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 20%)
+    path
+      stroke: rgba(0,0,0,0.5)
+      stroke-width: 2
 
 @keyframes move-forever
   0%
-    transform: translate3d(-150px, 0, 0)
+    transform: translate3d(0px, 0, 0)
 
   25%
-    transform: translate3d(-112.5px, 2px, 0)
-
-  75%
     transform: translate3d(-37.5px, -2px, 0)
 
+  75%
+    transform: translate3d(-112.5px, 2px, 0)
+
   100%
-    transform: translate3d(0px, 0, 0)
+    transform: translate3d(-150px, 0, 0)

@@ -1,4 +1,3 @@
-import argparse
 import json
 import os
 
@@ -29,7 +28,7 @@ if _debug := os.getenv("DEBUG"):
             arel.Path("./utils"),
             arel.Path("./resources"),
             arel.Path("./analysis"),
-            arel.Path("main.py")
+            arel.Path("main.py"),
         ],
     )
     app.add_websocket_route("/hot-reload", route=hot_reload, name="hot-reload")

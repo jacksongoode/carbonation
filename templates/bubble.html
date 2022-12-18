@@ -5,12 +5,17 @@
 <body>
   <main class="container">
     {% with title="Model" %} {% include 'components/nav.html' %} {% endwith%}
-    <h1 class="page-title">Total topics: {{ data|length }}</h1>
+    <!-- <h1 class="page-title">Total topics: {{ data|length }}</h1> -->
+    <h1 class="page-title">What's popping?</h1>
+
+    <p>Eos blanditiis dolorem hic earum ipsam. Vitae nulla perferendis harum ipsa. Necessitatibus
+      sed est assumenda ut consequuntur. Voluptates facere earum quo at. Odit accusamus qui sed
+      quos.</p>
 
     <!-- Wave! -->
     <div class="sea">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 -22.5 300 30" preserveAspectRatio="none" shape-rendering="auto">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -22.5 300 30"
+        preserveAspectRatio="none" shape-rendering="auto">
         <g>
           <path id="wave" fill="none" d="M 0 0 c 15 0 50 -15 75 -15 s 50 15 75 15 s 50 -15 75 -15 s 50 15 75 15"></path>
         </g>
@@ -21,31 +26,31 @@
     {% set randRot = range(1,360) | random %}
 
     <div class="row">
-      <div class="bubble" style="left: calc((50vw - {{ data[model].num_docs }}px) * {{ data[model].avg_bias * 2}});"
-        data-target="modal-example-{{ model }}" onClick="toggleModal(event)">
+      <a class="bubble" style="left: calc((75vw - {{ data[model].num_docs }}px) * {{ data[model].avg_bias}});"
+        href="#modal-example-{{ model }}">
+        {# data-target="modal-example-{{ model }}" onClick="toggleModal(event)"> #}
         <!-- Topic Description -->
         <span style="font-size: clamp(0.5rem, {{ data[model].num_docs / 1.5 }}px, 1.5rem);">
           {% for topic in data[model].topic[:5] %}{{ topic[0] }}, {% endfor%}
-          <!-- {{ data[model].topic[-1][0] }} -->
+          {{ data[model].topic[5][0] }}
         </span>
 
         <!-- Topic circle -->
-        <div class=" circle" style="
+        <div class="circle" style="
             height: {{ data[model].num_docs * 4}}px;
             width: {{ data[model].num_docs * 4}}px;
             rotate: {{ randRot }}deg;
-            animation-delay: {{ range(1, 1000) | random }}ms;
+            animation-delay: {{ range(1, 8000) | random }}ms;
             ">
         </div>
-      </div>
+      </a>
     </div>
 
     <!-- Modal -->
     <dialog id="modal-example-{{ model }}" class="article-modal">
       <article>
         <div>
-          <a href="#close" aria-label="Close" class="close" data-target="modal-example-{{ model }}"
-            onClick="toggleModal(event)">
+          <a href="#" aria-label="Close" class="close">
           </a>
         </div>
         <h2>Topic {{ model }}: {{ data[model].docs|length }}</h2>
@@ -70,11 +75,12 @@
           </li>
           {% endfor %}
         </ul>
-        <a href="#confirm" role="button" data-target="modal-example-{{ model }}" onClick="toggleModal(event)">
+        <a href="#" role="button">
           Return
         </a>
         </footer>
       </article>
+      <a class="click-away" href="#"></a>
     </dialog>
 
     {% endfor %}

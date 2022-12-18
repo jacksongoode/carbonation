@@ -15,6 +15,12 @@ $rnd8: (random(25) + 75)
   font-family: "League Spartan"
   src: local("League Spartan"), url("../fonts/LeagueSpartan-VF.woff2") format("woff2")
 
+html, body
+  position: relative
+  width: 100%
+  height: 100%
+  overflow: auto
+
 body
   font-family: "League Spartan"
 
@@ -33,6 +39,9 @@ body
   vertical-align: middle
   justify-content: center
   align-items: center
+  color: inherit
+  outline: none
+  background-color: transparent
 
   filter: brightness(1)
   transform: scale(1)
@@ -68,7 +77,9 @@ body
   margin: auto
 
   article
+    margin: 0
     border-radius: 1rem
+    overscroll-behavior: contain
 
   h2
     margin-bottom: 1rem
@@ -112,14 +123,14 @@ article
   position: absolute
   display: relative
   overflow: clip
-  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 95%)
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .25) 20%, rgba(0, 0, 0, .25) 80%, rgba(0, 0, 0, 0) 100%)
 
   svg
     height: 5vh
     width: 200%
 
     #wave
-      animation: move-forever 4s cubic-bezier(.6,.5,.4,.5) infinite
+      animation: move-forever 10s cubic-bezier(.6,.5,.4,.5) infinite
 
     path
       stroke: rgba(0,0,0,0.5)
@@ -137,3 +148,20 @@ article
 
   100%
     transform: translate3d(-150px, 0, 0)
+
+// Onclick
+
+dialog[id^="modal-example-"]
+  display: none
+
+  &:target
+    display: flex
+    pointer-events: auto
+
+.click-away
+  position: fixed
+  width: 100%
+  height: 100%
+  z-index: -1
+  opacity: 1
+  cursor: auto

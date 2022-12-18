@@ -2,30 +2,13 @@ import json
 from urllib.parse import urlparse
 
 from bertopic import BERTopic
+from hdbscan import HDBSCAN
 
-# from gensim.parsing.preprocessing import (
-#     preprocess_string,
-#     remove_stopwords,
-#     strip_multiple_whitespaces,
-#     strip_punctuation,
-#     strip_short,
-#     strip_tags,
-# )
-# from umap import UMAP
-# from hdbscan import HDBSCAN
 # from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer
+from umap import UMAP
 
 news_json = "newscatcher_4hr_11-21-2022_02:02:51.json"
-
-# CUSTOM_FILTERS = [
-#     lambda x: x.lower(),
-#     strip_tags,
-#     strip_punctuation,
-#     strip_multiple_whitespaces,
-#     remove_stopwords,
-#     strip_short,
-# ]
 
 
 # def preprocess(docs):

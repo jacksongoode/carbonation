@@ -1,3 +1,4 @@
+import gc
 import json
 from datetime import datetime
 
@@ -11,7 +12,12 @@ from .process import fetch_store
 
 @huey.periodic_task(crontab(minute=0, hour="*/4"))
 def cron_gen_bert():
-    generate_bert()
+    model, topic_docs, news = generate_bert()
+
+    # Cleanup?
+    del model, topic_docs, news
+    gc.collect()
+
 
 
 def generate_bert(hours=4, pages=10, news_json=None):
@@ -28,4 +34,4 @@ def generate_bert(hours=4, pages=10, news_json=None):
     print("Successfully generated new model!")
     print(f"{len(topic_docs)} topics generated!")
 
-    return
+    return model, topic_docs, news

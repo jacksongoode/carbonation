@@ -1,5 +1,6 @@
 bertopic
 fastapi
+huey
 jinja2
 newsapi-python
 newscatcherapi

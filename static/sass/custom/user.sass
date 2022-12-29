@@ -1,4 +1,19 @@
+@use "./modal"
 @import "../pico/variables"
+
+// Reset
+
+html, body
+  position: relative
+  width: 100%
+  height: 100%
+  overflow: auto
+
+// Weird, phones have extra padding on top?
+article
+  @if map-get($breakpoints, "sm")
+    @media (max-width: map-get($breakpoints, "sm"))
+      max-height: calc(100vh - var(--spacing) * 6)
 
 // Variables
 
@@ -15,12 +30,6 @@ $rnd8: (random(25) + 75)
   font-family: "League Spartan"
   src: local("League Spartan"), url("../fonts/LeagueSpartan-VF.woff2") format("woff2")
 
-html, body
-  position: relative
-  width: 100%
-  height: 100%
-  overflow: auto
-
 body
   font-family: "League Spartan"
 
@@ -33,7 +42,7 @@ body
   padding: 10px 0
 
 .bubble
-  position: relative
+  position: absolute
   display: flex
   text-align: center
   vertical-align: middle
@@ -42,7 +51,10 @@ body
   color: inherit
   outline: none
   background-color: transparent
+  border-radius: 100%
 
+  // We need bubble because transform is already applied
+  // to the circle itself - also to have text over
   filter: brightness(1)
   transform: scale(1)
   transition-duration: 0.1s, 0.1s
@@ -51,7 +63,7 @@ body
 
   span
     position: absolute
-    z-index: 99
+    z-index: 1
 
   &:hover
     filter: brightness(0.95)
@@ -60,35 +72,20 @@ body
     transition-duration: 0.2s, 0.2s
 
   .circle
+    position: absolute
     background-color: whitesmoke
     padding: 5px
     border: 1px solid rgba(0, 0, 0, 0.1)
     border-radius: 100%
-    animation: wobble 8s ease-in-out infinite forwards
+
+    animation-name: wobble
+    animation-duration: 8s
+    animation-timing-function: ease-in-out
+    animation-iteration-count: infinite
     animation-fill-mode: both
 
 .line-break
   margin: var(--spacing) 0
-
-// Corrections to pico.css
-
-.article-modal
-  text-align: left
-  margin: auto
-
-  article
-    margin: 0
-    border-radius: 1rem
-    overscroll-behavior: contain
-
-  h2
-    margin-bottom: 1rem
-
-// Weird, phones have extra padding on top?
-article
-  @if map-get($breakpoints, "sm")
-    @media (max-width: map-get($breakpoints, "sm"))
-      max-height: calc(100vh - var(--spacing) * 6)
 
 // Way too wide
 @if ($enable-class-container and $enable-classes)
@@ -96,26 +93,6 @@ article
     @if map-get($breakpoints, "xl")
       @media (min-width: map-get($breakpoints, "xl"))
         max-width: map-get($viewports, "lg")
-
-// Animations
-
-@keyframes wobble
-  0%,
-  100%
-    border-radius: $rnd1 * 1% $rnd2 * 1% $rnd3 * 1% $rnd4 * 1% unquote("/") $rnd5 * 1% $rnd6 * 1% $rnd7 * 1% $rnd8 * 1%
-    transform: translate(($rnd1 - $rnd2)+px, ($rnd2 - $rnd3)+px)
-
-  25%
-    border-radius: $rnd8 * 1% $rnd7 * 1% $rnd6 * 1% $rnd5 * 1% unquote("/") $rnd4 * 1% $rnd3 * 1% $rnd2 * 1% $rnd1 * 1%
-    transform: translate(($rnd3 - $rnd4)+px, ($rnd4 - $rnd5)+px)
-
-  50%
-    border-radius: $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1% unquote("/") $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1%
-    transform: translate(($rnd5 - $rnd6)+px, ($rnd6 - $rnd7)+px)
-
-  75%
-    border-radius: $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1% unquote("/") $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1%
-    transform: translate(($rnd7 - $rnd8)+px, ($rnd8 - $rnd1)+px)
 
 .sea
   left: 0
@@ -136,6 +113,26 @@ article
       stroke: rgba(0,0,0,0.5)
       stroke-width: 2
 
+  // Animations
+
+@keyframes wobble
+  0%,
+  100%
+    border-radius: $rnd1 * 1% $rnd2 * 1% $rnd3 * 1% $rnd4 * 1% unquote("/") $rnd5 * 1% $rnd6 * 1% $rnd7 * 1% $rnd8 * 1%
+    transform: translate(($rnd1 - $rnd2)+px, ($rnd2 - $rnd3)+px)
+
+  25%
+    border-radius: $rnd8 * 1% $rnd7 * 1% $rnd6 * 1% $rnd5 * 1% unquote("/") $rnd4 * 1% $rnd3 * 1% $rnd2 * 1% $rnd1 * 1%
+    transform: translate(($rnd3 - $rnd4)+px, ($rnd4 - $rnd5)+px)
+
+  50%
+    border-radius: $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1% unquote("/") $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1%
+    transform: translate(($rnd5 - $rnd6)+px, ($rnd6 - $rnd7)+px)
+
+  75%
+    border-radius: $rnd2 * 1% $rnd4 * 1% $rnd6 * 1% $rnd8 * 1% unquote("/") $rnd1 * 1% $rnd3 * 1% $rnd5 * 1% $rnd7 * 1%
+    transform: translate(($rnd7 - $rnd8)+px, ($rnd8 - $rnd1)+px)
+
 @keyframes move-forever
   0%
     transform: translate3d(0px, 0, 0)
@@ -148,20 +145,3 @@ article
 
   100%
     transform: translate3d(-150px, 0, 0)
-
-// Onclick
-
-dialog[id^="modal-example-"]
-  display: none
-
-  &:target
-    display: flex
-    pointer-events: auto
-
-.click-away
-  position: fixed
-  width: 100%
-  height: 100%
-  z-index: -1
-  opacity: 1
-  cursor: auto

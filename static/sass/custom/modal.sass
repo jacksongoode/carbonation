@@ -1,0 +1,32 @@
+@import "../pico/variables"
+
+// Corrections to pico.css
+
+.article-modal
+  text-align: left
+  margin: auto
+
+  article
+    margin: 0
+    border-radius: 1rem
+    overscroll-behavior: contain
+
+  h2
+    margin-bottom: 1rem
+
+// Onclick
+
+dialog[id^="modal-example-"]
+  display: none
+
+  &:target
+    display: flex
+    pointer-events: auto
+
+.click-away
+  position: fixed
+  width: 100%
+  height: 100%
+  z-index: -1
+  opacity: 1
+  cursor: auto

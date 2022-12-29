@@ -7,81 +7,97 @@
     {% with title="Model" %} {% include 'components/nav.html' %} {% endwith%}
     <!-- <h1 class="page-title">Total topics: {{ data|length }}</h1> -->
     <h1 class="page-title">What's popping?</h1>
-
-    <p>Eos blanditiis dolorem hic earum ipsam. Vitae nulla perferendis harum ipsa. Necessitatibus
-      sed est assumenda ut consequuntur. Voluptates facere earum quo at. Odit accusamus qui sed
-      quos.</p>
+    <p>
+      Eos blanditiis dolorem hic earum ipsam. Vitae nulla perferendis harum
+      ipsa. Necessitatibus sed est assumenda ut consequuntur. Voluptates
+      facere earum quo at. Odit accusamus qui sed quos.
+    </p>
 
     <!-- Wave! -->
     <div class="sea">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -22.5 300 30"
-        preserveAspectRatio="none" shape-rendering="auto">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 -22.5 300 30"
+          preserveAspectRatio="none"
+          shape-rendering="auto"
+        >
         <g>
-          <path id="wave" fill="none" d="M 0 0 c 15 0 50 -15 75 -15 s 50 15 75 15 s 50 -15 75 -15 s 50 15 75 15"></path>
+            <path
+              id="wave"
+              fill="none"
+              d="M 0 0 c 15 0 50 -15 75 -15 s 50 15 75 15 s 50 -15 75 -15 s 50 15 75 15"
+            ></path>
         </g>
       </svg>
     </div>
-
+    {% set ns = namespace(accum=0) %}
     {% for model in (data|list)[1:] %}
-    {% set randRot = range(1,360) | random %}
 
-    <div class="row">
-      <a class="bubble" style="left: calc((75vw - {{ data[model].num_docs }}px) * {{ data[model].avg_bias}});"
-        href="#modal-example-{{ model }}">
-        {# data-target="modal-example-{{ model }}" onClick="toggleModal(event)"> #}
-        <!-- Topic Description -->
-        <span style="font-size: clamp(0.5rem, {{ data[model].num_docs / 1.5 }}px, 1.5rem);">
-          {% for topic in data[model].topic[:5] %}{{ topic[0] }}, {% endfor%}
-          {{ data[model].topic[5][0] }}
-        </span>
-
-        <!-- Topic circle -->
-        <div class="circle" style="
-            height: {{ data[model].num_docs * 4}}px;
-            width: {{ data[model].num_docs * 4}}px;
-            rotate: {{ randRot }}deg;
-            animation-delay: {{ range(1, 8000) | random }}ms;
-            ">
-        </div>
-      </a>
-    </div>
-
-    <!-- Modal -->
-    <dialog id="modal-example-{{ model }}" class="article-modal">
-      <article>
-        <div>
-          <a href="#" aria-label="Close" class="close">
-          </a>
-        </div>
-        <h2>Topic {{ model }}: {{ data[model].docs|length }}</h2>
-        <p>
-          Topic description:
-          <br>
-          <i>
-            {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {% endfor
-            %} {{ data[model].topic[-1][0] }}
-          </i>
-        </p>
-        <hr class="line-break" />
-        <ul>
-          {% for doc in data[model].docs[:20] %}
-          <li>
+      {% set rotation = range(1,360) | random %}
+      {% set delay = range(1, 8000) | random %}
+      {% set diam = data[model].num_docs * 4 %}
+      {% set left = diam/2 %}
+      {% set ns.accum = ns.accum + diam %}
+      <div class="row" style="height: {{ diam }}px;">
+        <!-- Modal -->
+        <dialog id="modal-example-{{ model }}" class="article-modal">
+          <article>
+            <div>
+              <a href="#" aria-label="Close" class="close">
+              </a>
+            </div>
+            <h2>Topic {{ model }}: {{ data[model].docs|length }}</h2>
             <p>
-              {{ doc.text }}
+              Topic description:
               <br>
-              <a href="{{ doc.link }}">{{ doc.domain }}</a> -
-              Bias: {{ doc.bias }}
+              <i>
+                {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {% endfor
+                %} {{ data[model].topic[-1][0] }}
+              </i>
             </p>
-          </li>
-          {% endfor %}
-        </ul>
-        <a href="#" role="button">
-          Return
+            <hr class="line-break" />
+            <ul>
+              {% for doc in data[model].docs[:20] %}
+              <li>
+                <p>
+                  {{ doc.text }}
+                  <br>
+                  <a href="{{ doc.link }}">{{ doc.domain }}</a> -
+                  Bias: {{ doc.bias }}
+                </p>
+              </li>
+              {% endfor %}
+            </ul>
+            <a href="#" role="button">
+              Return
+            </a>
+            </footer>
+          </article>
+          <a class="click-away" href="#"></a>
+        </dialog>
+        <!-- Bubble -->
+        <a class="bubble" style="
+          left: calc(50vw - {{left + data[model].avg_bias * 1000}}px);
+          height: {{ diam }}px;
+          width: {{ diam }}px;"
+          href="#modal-example-{{ model }}">
+          <!-- Topic Description -->
+          <span style="font-size: clamp(0.5rem, {{ data[model].num_docs / 1.5 }}px, 1.5rem);">
+            {% for topic in data[model].topic[:5] %}{{ topic[0] }}, {% endfor%}
+            {{ data[model].topic[5][0] }}
+          </span>
+
+          <!-- Topic circle -->
+          <div class="circle" style="
+                height: {{ diam }}px;
+                width: {{ diam }}px;
+                rotate: {{ rotation }}deg;
+                animation-delay: -{{ delay }}ms;
+                ">
+          </div>
         </a>
-        </footer>
-      </article>
-      <a class="click-away" href="#"></a>
-    </dialog>
+      </div>
 
     {% endfor %}
   </main>

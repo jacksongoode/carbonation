@@ -12,4 +12,4 @@ which topics are covered more often by progressive or conservative outlets.
 It does so by leveraging the [NewsCatcher API](https://newscatcherapi.com/) to retrieve articles and
 summaries from the most popular news publishers.
 
-Built with Flask, Next.js, and serverless Postgres.
+Built mostly with FastAPI and some handwritten Jinja.

@@ -19,7 +19,6 @@ def cron_gen_bert():
     gc.collect()
 
 
-
 def generate_bert(hours=4, pages=10, news_json=None):
     print(f"Running bert gen job at {datetime.now()}")
 

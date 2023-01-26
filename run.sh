@@ -14,6 +14,6 @@ railway)
 	uvicorn --host 0.0.0.0 --port "$PORT" main:app
 	;;
 *)
-	echo "Unknown method!"
+	echo -e "Unknown method!\nCall 'dev', 'prod', or 'railway'"
 	;;
 esac

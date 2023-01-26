@@ -2,11 +2,11 @@ import json
 from urllib.parse import urlparse
 
 from bertopic import BERTopic
-from hdbscan import HDBSCAN
+# from hdbscan import HDBSCAN
 
 # from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer
-from umap import UMAP
+# from umap import UMAP
 
 news_json = "newscatcher_4hr_11-21-2022_02:02:51.json"
 
@@ -19,7 +19,6 @@ news_json = "newscatcher_4hr_11-21-2022_02:02:51.json"
 
 
 def bert_model(news=None):
-
     vectorizer_model = CountVectorizer(
         ngram_range=(1, 2), strip_accents="ascii", stop_words="english"
     )

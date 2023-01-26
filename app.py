@@ -6,18 +6,17 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from huey import SqliteHuey
+from huey.contrib.mini import MiniHuey
 from newsapi import NewsApiClient
 from newscatcherapi import NewsCatcherApiClient
 
-from utils import get_newsapi, get_newscatcher_headlines, split_url
+from utils import get_newsapi, get_newscatcher_headlines
 
-huey = SqliteHuey(filename="/tmp/queue.db")
+huey = MiniHuey()
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
-# app.jinja_env.globals.update(split_url=split_url)
 
 # Hot reload
 if _debug := os.getenv("DEBUG"):

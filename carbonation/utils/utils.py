@@ -25,7 +25,7 @@ def hour_window(hours):
 def get_newscatcher_headlines(hours, sources=None, max_page=1):
     before, now = hour_window(hours)
 
-    with open("resources/sources/bad_sources.txt", "r") as f:
+    with open("carbonation/resources/sources/bad_sources.txt", "r") as f:
         bad_sources = f.readlines()
 
     # articles = catcher.get_latest_headlines_all_pages(
@@ -108,12 +108,12 @@ class SetEncoder(json.JSONEncoder):
 def rank_sources(src=None):
     """Create sources by stripping source info."""
     if src is None:
-        srcs = glob.glob("resources/articles/*.json")
+        srcs = glob.glob("carbonation/resources/articles/*.json")
     else:
         srcs = [src]
 
     try:
-        with open("resources/sources/nc_sources.json", "r") as f:
+        with open("carbonation/resources/sources/nc_sources.json", "r") as f:
             nc_sources = json.load(f)
     except FileNotFoundError:
         nc_sources = {}
@@ -143,5 +143,5 @@ def rank_sources(src=None):
     # At the end let's sort and write
     nc_sources = dict(sorted(nc_sources.items(), key=lambda x: x[1]["rank"]))
 
-    with open("resources/sources/nc_sources.json", "w") as f:
+    with open("carbonation/resources/sources/nc_sources.json", "w") as f:
         json.dump(nc_sources, f, cls=SetEncoder)

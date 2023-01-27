@@ -1,17 +1,14 @@
 # User
-.trunk/
 **/.DS_Store
 .ipynb_checkpoints/
-.deta/
-resources/articles/*
+carbonation/resources/articles/*
 .python-version
 Procfile
-fly.toml
 node_modules/
 .vscode/settings.json
 Untitled.ipynb
-static/css/style.css
-static/css/style.css.map
+carbonation/static/css/style.css
+carbonation/static/css/style.css.map
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

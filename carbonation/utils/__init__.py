@@ -4,14 +4,14 @@ from .fetch import (
     fetch_mbfc,
     fetch_newsapi_sources,
     fetch_newscatcher_sources,
-    write_bias
+    write_bias,
 )
 from .utils import (
     get_newsapi,
     get_newsapi_headlines,
     get_newscatcher_headlines,
+    rank_sources,
     split_url,
-    rank_sources
 )
 
 __all__ = [
@@ -25,5 +25,5 @@ __all__ = [
     "get_newscatcher_headlines",
     "split_url",
     "write_bias",
-    "rank_sources"
+    "rank_sources",
 ]

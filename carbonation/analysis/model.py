@@ -2,10 +2,13 @@ import json
 from urllib.parse import urlparse
 
 from bertopic import BERTopic
-# from hdbscan import HDBSCAN
 
 # from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer
+
+# from hdbscan import HDBSCAN
+
+
 # from umap import UMAP
 
 news_json = "newscatcher_4hr_11-21-2022_02:02:51.json"
@@ -38,7 +41,7 @@ def bert_model(news=None):
     )
 
     if news is None:
-        with open(f"resources/articles/{news_json}", "r") as f:
+        with open(f"carbonation/resources/articles/{news_json}", "r") as f:
             news = json.load(f)
 
     # Enrich docs with bias
@@ -89,7 +92,7 @@ def create_topic_docs(model, topics, probs, docs, links):
     # topic_docs = sorted(topic_docs, key=lambda x: len(topic_docs[x]['docs']))
 
     # f"resources/computed/bert_{'_'.join(news_json.split('_')[1:])}", "w"
-    with open("resources/computed/bert_test.json", "w") as f:
+    with open("carbonation/resources/computed/bert_test.json", "w") as f:
         f.write(json.dumps(topic_docs))
 
     return (model, topic_docs)
@@ -98,12 +101,12 @@ def create_topic_docs(model, topics, probs, docs, links):
 def enrich_docs(news):
     # news = json.load(open(f"resources/articles/{news_json}"))
 
-    with open("resources/bias/mbfc_bias.json", "r") as f:
+    with open("carbonation/resources/bias/mbfc_bias.json", "r") as f:
         mbfc_bias = json.load(f)
 
     mbfc_bias = {k: v["b"] for (k, v) in mbfc_bias.items()}
 
-    with open("resources/bias/allsides_bias.json", "r") as f:
+    with open("carbonation/resources/bias/allsides_bias.json", "r") as f:
         allsides_bias = json.load(f)["allsides_media_bias_ratings"]
 
     # For AllSides compose dict

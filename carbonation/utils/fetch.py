@@ -21,13 +21,13 @@ def download_resource(url, path):
 
 def fetch_newscatcher_sources():
     sources = catcher.get_sources(lang="en", countries="US")
-    with open("resources/sources/newscatcher.json", "w") as f:
+    with open("carbonation/resources/sources/newscatcher.json", "w") as f:
         json.dump(sources, f)
 
 
 def fetch_newsapi_sources():
     sources = newsapi.get_sources(language="en")
-    with open("resources/sources/newsapi.json", "w") as f:
+    with open("carbonation/resources/sources/newsapi.json", "w") as f:
         json.dump(sources, f)
 
 
@@ -55,6 +55,6 @@ def write_bias():
 
     urls = list(set(as_urls + mbfc_urls))
 
-    with open("resources/sources/sources.txt", "w") as f:
+    with open("carbonation/resources/sources/sources.txt", "w") as f:
         for line in urls:
             f.write(f"{line}\n")

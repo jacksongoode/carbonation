@@ -3,7 +3,7 @@ from huey import crontab
 from carbonation.app import huey
 
 
-@huey.periodic_task(crontab(minute="*/1"))
+@huey.periodic_task(crontab(minute=0, hour="*/4"))
 def cron_gen_bert():
     import subprocess
 

@@ -10,7 +10,7 @@ prod)
 	uvicorn --host 0.0.0.0 --port 8080 carbonation.main:app
 	;;
 railway)
-	npm run sass-prod && huey_consumer.py main.huey &
+	npm run sass-prod && huey_consumer.py carbonation.main.huey &
 	uvicorn --host 0.0.0.0 --port "$PORT" carbonation.main:app
 	;;
 *)

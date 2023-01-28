@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "sass-dev": "sass --watch --update --style=expanded carbonation/static/sass/custom/user.sass:carbonation/static/css/style.css",
-    "sass-prod": "sass --no-source-map --style=compressed carbonation/static/sass/custom/user.sass:carbonation/static/css/style.css"
-  },
-  "devDependencies": {
-    "sass": "^1.56.1"
-  }
-}

@@ -77,8 +77,9 @@
           <a class="click-away" href="#"></a>
         </dialog>
         <!-- Bubble -->
+        {% set bubble_pos = left + data[model].avg_bias * 600 %}
         <a class="bubble" style="
-          left: calc(50vw - {{left + data[model].avg_bias * 1000}}px);
+          left: clamp(0vw + {{diam*2}}px, calc(50vw - {{bubble_pos}}px), calc(100vw - {{diam*2}}px));
           height: {{ diam }}px;
           width: {{ diam }}px;"
           href="#modal-example-{{ model }}">

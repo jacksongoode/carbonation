@@ -1,8 +1,10 @@
 import uvicorn
 
 # trunk-ignore(flake8/F401)
-from carbonation.jobs import cron_gen_bert
 from carbonation.app import app, huey
+
+# trunk-ignore(flake8/F401)
+from carbonation.jobs import cron_gen_bert
 
 if __name__ == "__main__":
     print("Starting!")

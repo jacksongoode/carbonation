@@ -7,6 +7,4 @@ from carbonation.app import huey
 def cron_gen_bert():
     import subprocess
 
-    subprocess.run(
-        ["python", "-m" "carbonation.jobs.bert_job"], stdout=subprocess.PIPE
-    )
+    subprocess.run(["python", "-m" "carbonation.jobs.bert_job"], stdout=subprocess.PIPE)

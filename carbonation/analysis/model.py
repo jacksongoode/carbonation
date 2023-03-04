@@ -1,5 +1,6 @@
 import json
 from urllib.parse import urlparse
+import sqlite3
 
 from bertopic import BERTopic
 
@@ -7,11 +8,7 @@ from bertopic import BERTopic
 from sklearn.feature_extraction.text import CountVectorizer
 
 # from hdbscan import HDBSCAN
-
-
 # from umap import UMAP
-
-news_json = "newscatcher_4hr_11-21-2022_02:02:51.json"
 
 
 # def preprocess(docs):
@@ -41,8 +38,21 @@ def bert_model(news=None):
     )
 
     if news is None:
-        with open(f"carbonation/resources/articles/{news_json}", "r") as f:
-            news = json.load(f)
+        try:
+            # Connect to the database
+            conn = sqlite3.connect('carbonation/resources/carbonaton.db')
+
+            # Retrieve the latest key by date
+            cursor = conn.execute("SELECT data FROM models ORDER BY id DESC LIMIT 1")
+            latest_data = cursor.fetchone()[0]
+
+            # Close the connection
+            conn.close()
+
+        except sqlite3.Error as e:
+            print(f"An error occurred: {e}")
+
+        news = json.load(latest_data)
 
     # Enrich docs with bias
     news = enrich_docs(news)

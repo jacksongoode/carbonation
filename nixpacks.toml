@@ -1,1 +1,1 @@
-providers = ["python", "node"]
+providers = ["python"]

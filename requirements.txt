@@ -2,6 +2,7 @@ bertopic
 fastapi
 huey
 jinja2
+libsass
 newsapi-python
 newscatcherapi
 python-dotenv

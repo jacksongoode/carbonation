@@ -4,11 +4,9 @@
 carbonation/resources/articles/*
 .python-version
 Procfile
-node_modules/
 .vscode/settings.json
 Untitled.ipynb
-carbonation/static/css/style.css
-carbonation/static/css/style.css.map
+carbonation/static/css/custom/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

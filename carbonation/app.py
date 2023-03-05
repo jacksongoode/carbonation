@@ -18,19 +18,6 @@ templates = Jinja2Templates(directory="carbonation/templates")
 # Hot reload
 if _debug := os.getenv("DEBUG"):
     import arel
-    from fastapi.middleware.wsgi import WSGIMiddleware
-    from sassutils.wsgi import SassMiddleware
-
-    app.wsgi_app = SassMiddleware(
-        WSGIMiddleware(app),
-        {
-            "carbonation": (
-                "static/sass/custom/",
-                "static/css/custom",
-                "/static/css/custom",
-            )
-        },
-    )
 
     hot_reload = arel.HotReload(
         paths=[

@@ -2,7 +2,7 @@
 
 case $1 in
 dev)
-	DEBUG=true uvicorn --reload --reload-exclude=".trunk/" --reload-include="*.css" carbonation.main:app
+	DEBUG=true uvicorn --host localhost --reload --reload-exclude=".trunk/" --reload-include="*.css" carbonation.main:app
 	;;
 prod)
 	python setup.py build_sass && huey_consumer.py carbonation.main.huey &

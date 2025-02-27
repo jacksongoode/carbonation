@@ -32,9 +32,6 @@ const isModalOpen = (modal) => {
 
 // Open modal
 const openModal = (modal) => {
-  // if (isScrollbarVisible()) {
-  //   document.documentElement.style.setProperty('--scrollbar-width', `${getScrollbarWidth()}px`);
-  // }
   document.documentElement.classList.add(isOpenClass, openingClass);
   setTimeout(() => {
     visibleModal = modal;
@@ -96,3 +93,17 @@ const getScrollbarWidth = () => {
 const isScrollbarVisible = () => {
   return document.body.scrollHeight > screen.height;
 };
+
+// Apply bubble styles from data attributes
+// Ensure bubbles are positioned and sized correctly based on data attributes
+document.addEventListener('DOMContentLoaded', function() {
+  const bubbles = document.querySelectorAll('.bubble[data-left][data-height][data-width]');
+  bubbles.forEach(bubble => {
+    const left = bubble.getAttribute('data-left');
+    const height = bubble.getAttribute('data-height');
+    const width = bubble.getAttribute('data-width');
+    if(left) bubble.style.left = left;
+    if(height) bubble.style.height = height + 'px';
+    if(width) bubble.style.width = width + 'px';
+  });
+});

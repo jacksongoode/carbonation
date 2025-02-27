@@ -1,0 +1,25 @@
+[project]
+name = "carbonation"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "bertopic",
+    "fastapi",
+    "huey",
+    "jinja2",
+    "libsass",
+    "newsapi-python",
+    "newscatcherapi",
+    "python-dotenv",
+    "requests",
+    "uvicorn[standard]",
+    "llvmlite>=0.44.0"
+]
+
+[tool.uv]
+dev-dependencies = [
+    "arel",
+    "jupyterlab"
+]

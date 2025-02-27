@@ -33,7 +33,6 @@
     </div>
     {% set ns = namespace(accum=0) %}
     {% for model in (data|list)[1:] %}
-
       {% set rotation = range(1,360) | random %}
       {% set delay = range(1, 8000) | random %}
       {% set diam = data[model].num_docs * 4 %}
@@ -52,8 +51,7 @@
               Topic description:
               <br>
               <i>
-                {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {% endfor
-                %} {{ data[model].topic[-1][0] }}
+                {% for topic in data[model].topic[:-1] %}{{ topic[0] }}, {% endfor %} {{ data[model].topic[-1][0] }}
               </i>
             </p>
             <hr class="line-break" />
@@ -78,31 +76,27 @@
         </dialog>
         <!-- Bubble -->
         {% set bubble_pos = left + data[model].avg_bias * 600 %}
-        <a class="bubble" style="
-          left: clamp(0vw + {{diam*2}}px, calc(50vw - {{bubble_pos}}px), calc(100vw - {{diam*2}}px));
-          height: {{ diam }}px;
-          width: {{ diam }}px;"
-          href="#modal-example-{{ model }}">
-          <!-- Topic Description -->
-          <span style="font-size: clamp(0.5rem, {{ data[model].num_docs / 1.5 }}px, 1.5rem);">
-            {% for topic in data[model].topic[:5] %}{{ topic[0] }}, {% endfor%}
-            {{ data[model].topic[5][0] }}
-          </span>
-
-          <!-- Topic circle -->
-          <div class="circle" style="
-                height: {{ diam }}px;
-                width: {{ diam }}px;
-                rotate: {{ rotation }}deg;
-                animation-delay: -{{ delay }}ms;
-                ">
+        <a class="bubble"
+           data-left="clamp({{ diam*2 }}px, calc(50vw - ({{ bubble_pos }}px)), calc(100vw - ({{ diam*2 }}px)))"
+           data-height="{{ diam }}"
+           data-width="{{ diam }}"
+           href="#modal-example-{{ model }}"
+           data-target="modal-example-{{ model }}"
+           onclick="toggleModal(event)">
+          <!-- Topic circle as parent -->
+          <div class="circle" style="height: {{ diam }}px; width: {{ diam }}px; rotate: {{ rotation }}deg; animation-delay: -{{ delay }}ms;">
+            <!-- Topic Description -->
+            <span style="font-size: clamp(0.5rem, {{ data[model].num_docs / 1.5 }}px, 1.5rem); transform: rotate(-{{ rotation }}deg);">
+              {% for topic in data[model].topic[:5] %}{{ topic[0] }}, {% endfor %} {{ data[model].topic[5][0] }}
+            </span>
           </div>
         </a>
       </div>
-
     {% endfor %}
+
   </main>
   {% if DEBUG %} {{ hot_reload.script(url_for('hot-reload')) | safe }} {% endif %}
+  <script src="{{ url_for('static', path='js/script.js') }}"></script>
 </body>
 
 </html>
